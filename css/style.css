@@ -36,30 +36,39 @@ header {
 
 /*=== DESCRIPTION ===*/
 
-section {
-    height: 366px;
+@media (max-width: 650px) {
+    .description {
+        width: 85% !important;
+        grid-template-columns: 1fr !important;
+    }
+    .description .desc-text {
+        width: 90% !important;
+        padding: 2rem 1rem !important;
+    }
+    .description .desc-img {
+        margin: 0 auto !important;
+    }
 }
 
 .description {
     width: 67.1%;
-    height: 100%;
     background: #FBDFDB;
     border-radius: 30px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    
 }
 
 .description .desc-text {
-    width: 316px;
-    padding: 117px 60px;
+    width: 18rem;
+    padding: 7rem 4rem;
 }
 
 .description .desc-text h1 {
     font-family: Roboto-Bold;
     font-size: 32px;
     color: #111111;
+    padding-bottom: 0.7rem;
 }
 
 .description .desc-text p {
@@ -72,5 +81,34 @@ section {
 
 .description .desc-img {
     margin: auto auto 0 auto;
-    bottom: 0;
+}
+
+/*=== SOBRE ===*/
+
+.about {
+    width: 67.1%;
+    margin: 0 auto 2rem auto;
+    
+}
+
+.about h1, h2 {
+    font-family: Roboto-Bold;
+    color: #111111;
+    padding: 2rem 0;
+}
+
+.about h1 {
+    font-size: 24px;
+}
+
+.about h2 {
+    font-size: 20px;
+}
+
+.about p {
+    font-family: Roboto-Regular;
+    font-size: 18px;
+    color: #444444;
+    line-height: 28px;
+    text-align: justify;
 }
