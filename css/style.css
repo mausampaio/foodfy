@@ -6,7 +6,10 @@
 
 body {
     font-family: Roboto-Regular;
+    height: 100vh;
 }
+
+/*=== MENU ===*/
 
 header {
     padding: 30px;
@@ -29,4 +32,45 @@ header {
     color: #111111;
     text-decoration: none;
     margin: 0 15px;
+}
+
+/*=== DESCRIPTION ===*/
+
+section {
+    height: 366px;
+}
+
+.description {
+    width: 67.1%;
+    height: 100%;
+    background: #FBDFDB;
+    border-radius: 30px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+}
+
+.description .desc-text {
+    width: 316px;
+    padding: 117px 60px;
+}
+
+.description .desc-text h1 {
+    font-family: Roboto-Bold;
+    font-size: 32px;
+    color: #111111;
+}
+
+.description .desc-text p {
+    opacity: 0.7;
+    font-family: Roboto-Regular;
+    font-size: 18px;
+    color: #000000;
+    line-height: 28px;
+}
+
+.description .desc-img {
+    margin: auto auto 0 auto;
+    bottom: 0;
 }
