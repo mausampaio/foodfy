@@ -83,6 +83,49 @@ header {
     margin: auto auto 0 auto;
 }
 
+/*=== RECEITAS ===*/
+
+.wrapper {
+    margin-left: 16.4%;
+    padding-top: 2.5rem;
+}
+
+.wrapper h1 {
+    font-family: Roboto-Bold;
+    font-size: 24px;
+    color: #111111;
+}
+
+.recipes {
+    max-width: 67.1%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.recipe-image-container img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.recipe-title {
+    padding-top: 1rem;
+}
+
+.recipe-title p {
+    font-size: 18px;
+}
+
+.recipe-author {
+    padding-top: 0.3rem;
+}
+
+.recipe-author {
+    font-size: 14px;
+    color: #777777;
+}
+
 /*=== SOBRE ===*/
 
 .about {
