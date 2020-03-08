@@ -104,6 +104,10 @@ header {
     gap: 20px;
 }
 
+.recipe {
+    cursor: pointer;
+}
+
 .recipe-image-container img {
     width: 100%;
     border-radius: 15px;
