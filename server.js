@@ -1,6 +1,6 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
-const videos = require("./data");
+const recipes = require("./data");
 
 const server = express();
 
@@ -15,7 +15,7 @@ nunjucks.configure("views", {
 });
 
 server.get("/", function(req, res) {
-    return res.render("index");
+    return res.render("index", {itens: recipes});
 });
 
 server.get("/about", function(req, res) {
@@ -23,7 +23,7 @@ server.get("/about", function(req, res) {
 });
 
 server.get("/recipes", function(req, res) {
-    return res.render("recipes");
+    return res.render("recipes", {itens: recipes});
 });
 
 server.listen(5000, function() {
