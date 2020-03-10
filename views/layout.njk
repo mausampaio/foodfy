@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Foodfy</title>
+    {% endblock head %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/">
+                <img src="/assets/logo.png" alt="Logo Foodfy">
+            </a>
+        </div>
+        <div class="links">
+            <a href="/about">Sobre</a>
+            <a href="/recipes">Receitas</a>
+        </div>
+    </header>
+    
+    {% block content %}
+    {% endblock content %}
+
+    <footer>
+        <p>Todos direitos reservados, receitas Foodfy.</p>
+    </footer>
+
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <img src="./assets/burger.png" alt="Imagem Receita">
+                <h1>Triplo bacon burger</h1>
+                <p>por Jorge Relato</p>
+                <div class="close-modal-container">
+                    <a class="close-modal">Fechar modal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/scripts.js"></script>
+</body>
+</html>

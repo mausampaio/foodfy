@@ -1,25 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receitas</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <a href="index.html">
-                <img src="./assets/logo.png" alt="Logo Foodfy">
-            </a>
-        </div>
-        <div class="links">
-            <a href="about.html">Sobre</a>
-            <a href="recipes.html">Receitas</a>
-        </div>
-    </header>
+{% extends "layout.njk" %}
 
+{% block head %}
+    <title>Receitas</title>
+{% endblock head %}
+
+{% block content %}
     <section class="recipes">
         <div class="recipe" id="burger">
             <div class="recipe-image-container">
@@ -155,24 +140,4 @@
             </div>
         </div>
     </section>
-
-    <footer>
-        <p>Todos direitos reservados, receitas Foodfy.</p>
-    </footer>
-
-    <div class="modal-overlay">
-        <div class="modal">
-            <div class="modal-content">
-                <img src="./assets/burger.png" alt="Imagem Receita">
-                <h1>Triplo bacon burger</h1>
-                <p>por Jorge Relato</p>
-                <div class="close-modal-container">
-                    <a class="close-modal">Fechar modal</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="./js/scripts.js"></script>
-</body>
-</html>
+{% endblock content %}   
