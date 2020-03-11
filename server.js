@@ -26,6 +26,12 @@ server.get("/recipes", function(req, res) {
     return res.render("recipes", {itens: recipes});
 });
 
+server.get("/recipes/:index", function(req, res) {
+    const recipeIndex = req.params.index;
+    const recipe = [recipes[recipeIndex]];
+    return res.render("recipe", {itens: recipe});
+});
+
 server.listen(5000, function() {
     console.log("Console is runing");
 });

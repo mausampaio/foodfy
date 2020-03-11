@@ -1,15 +1,8 @@
-const modalOverlay = document.querySelector('.modal-overlay');
-const recipes = document.querySelectorAll('.recipe');
+const cards = document.querySelectorAll('.card');
 
-for (let recipe of recipes) {
-    recipe.addEventListener("click", function(){
-        const recipeID = recipe.getAttribute("id");
-        modalOverlay.classList.add("active");
-        modalOverlay.querySelector("img").src = `./assets/${recipeID}.png`;
+for (let card of cards) {
+    card.addEventListener("click", function(){
+        const recipeID = card.getAttribute("id");
+        window.location.href = `/recipes/${recipeID}`;
     });
 };
-
-document.querySelector('.close-modal').addEventListener("click", function(){
-    modalOverlay.classList.remove('active');
-    modalOverlay.querySelector("img").src = "";
-});

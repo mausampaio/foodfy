@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: Roboto-Regular;
+    font-family: Roboto;
     height: 100vh;
 }
 
@@ -65,7 +65,8 @@ header {
 }
 
 .description .desc-text h1 {
-    font-family: Roboto-Bold;
+    font-family: Roboto;
+    font-weight: bold;
     font-size: 32px;
     color: #111111;
     padding-bottom: 0.7rem;
@@ -73,7 +74,7 @@ header {
 
 .description .desc-text p {
     opacity: 0.7;
-    font-family: Roboto-Regular;
+    font-family: Roboto;
     font-size: 18px;
     color: #000000;
     line-height: 28px;
@@ -91,12 +92,13 @@ header {
 }
 
 .wrapper h1 {
-    font-family: Roboto-Bold;
+    font-family: Roboto;
+    font-weight: bold;
     font-size: 24px;
     color: #111111;
 }
 
-.recipes {
+.cards {
     max-width: 67.1%;
     margin: 20px auto;
     display: grid;
@@ -104,29 +106,28 @@ header {
     gap: 20px;
 }
 
-.recipe {
+.card {
     cursor: pointer;
 }
 
-.recipe-image-container img {
+.card-image-container img {
     width: 100%;
-    max-height: 95.53px;
     border-radius: 15px;
 }
 
-.recipe-title {
+.card-title {
     padding-top: 1rem;
 }
 
-.recipe-title p {
+.card-title p {
     font-size: 18px;
 }
 
-.recipe-author {
+.card-author {
     padding-top: 0.3rem;
 }
 
-.recipe-author {
+.card-author p {
     font-size: 14px;
     color: #777777;
 }
@@ -140,7 +141,8 @@ header {
 }
 
 .about h1, h2 {
-    font-family: Roboto-Bold;
+    font-family: Roboto;
+    font-weight: bold;
     color: #111111;
     padding: 2rem 0;
 }
@@ -154,7 +156,7 @@ header {
 }
 
 .about p {
-    font-family: Roboto-Regular;
+    font-family: Roboto;
     font-size: 18px;
     color: #444444;
     line-height: 28px;
@@ -238,4 +240,62 @@ footer p {
 .modal-overlay.active {
     opacity: 1;
     visibility: visible;
+}
+
+/*=== RECEITA ===*/
+
+.recipe {
+    width: 67.1%;
+    margin: 0 auto;
+}
+
+.recipe-title, 
+.recipe-author {
+    text-align: center;
+}
+
+.recipe-title p {
+    font-family: Roboto;
+    font-size: 36px;
+    font-weight: bold;
+    padding-top: 3.9%;
+}
+
+.recipe-author p {
+    font-size: 20px;
+    color: #777777;
+}
+
+.recipe-info {
+    padding-top: 3.9%;
+}
+
+.recipe-info h3 {
+    font-weight: bold;
+    font-size: 24px;
+    color: #111111;
+    text-align: left;
+    display: inline;
+    padding-right: 0.6%;
+}
+
+.recipe-info ul, 
+.recipe-info p{
+    font-size: 18px;
+    color: #444444;
+    line-height: 28px;
+    padding-top: 1.6%;
+    list-style-position: inside;
+}
+
+.recipe-info p {
+    text-align: justify;
+    white-space: pre-line;
+}
+
+.toggle {
+    font-size: 12px;
+    color: #999999;
+    font-weight: bold;
+    cursor: pointer;
 }

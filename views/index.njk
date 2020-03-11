@@ -21,16 +21,16 @@
         <h1>Mais acessadas</h1>
     </div>
 
-    <section class="recipes">
+    <section class="cards">
         {% for item in itens %}
-            <div class="recipe" id="burger">
-                <div class="recipe-image-container">
+            <div class="card" id="burger">
+                <div class="card-image-container">
                     <img src="{{item.image}}" alt="Imagem Receita">
                 </div>
-                <div class="item-title">
+                <div class="card-title">
                     <p>{{item.title}}</p>
                 </div>
-                <div class="item-author">
+                <div class="card-author">
                     <p>{{item.author}}</p>
                 </div>
             </div>
