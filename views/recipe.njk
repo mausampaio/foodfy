@@ -19,26 +19,32 @@
                 </div>
                 <div class="recipe-info">
                     <h3>Ingredientes</h3>
-                    <span class="toggle">ESCONDER</span>
-                    <ul>
-                    {% for ingredients in item.ingredients %}
-                        <li>{{ingredients}}</li>
-                    {% endfor %}
-                    </ul>
+                    <span class="toggle-ingredients">ESCONDER</span>
+                    <div id="ingredients">
+                        <ul>
+                        {% for ingredients in item.ingredients %}
+                            <li>{{ingredients}}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
                 </div>
                 <div class="recipe-info">
                     <h3>Preparação</h3>
-                    <span class="toggle">ESCONDER</span>
-                    <ul>
-                    {% for preparation in item.preparation %}
-                        <li>{{preparation}}</li>
-                    {% endfor %}
-                    </ul>
+                    <span class="toggle-preparation">ESCONDER</span>
+                    <div id="preparation">
+                        <ul>
+                        {% for preparation in item.preparation %}
+                            <li>{{preparation}}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
                 </div>
                 <div class="recipe-info">
                     <h3>Informações adicionais</h3>
-                    <span class="toggle">ESCONDER</span>
-                    <p>{{item.information}}</p>
+                    <span class="toggle-info">ESCONDER</span>
+                    <div id="info">
+                        <p>{{item.information}}</p>
+                    </div>
                 </div>
             </div>
         {% endfor %}

@@ -293,9 +293,13 @@ footer p {
     white-space: pre-line;
 }
 
-.toggle {
+.toggle-preparation, .toggle-info, .toggle-ingredients {
     font-size: 12px;
     color: #999999;
     font-weight: bold;
     cursor: pointer;
+}
+
+.hide {
+    display: none;
 }
