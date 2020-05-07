@@ -1,0 +1,21 @@
+{% extends "./layout.njk" %}
+
+{% block head %}
+    <title>Editando receita}</title>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" action="/admin/recipes/{{index}}?_method=DELETE">
+        <div class="list-title-edit">
+            <h1>Editando receita</h1>
+            <div class="delete">
+                <button type="submit" class="button-delete">Deletar</button>
+            </div>
+            <form method="POST" action="/admin/recipes/{{index}}?_method=PUT">
+                <button type="submit" class="button">Salvar receita</button>
+            </form>
+        </div>
+    </form>
+    
+    {% include './fields.njk' %}
+{% endblock content %}

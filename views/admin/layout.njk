@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Foodfy Admin</title>
+    {% endblock head %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-admin">
+            <div class="logo">
+                <a href="/admin/recipes">
+                    <img src="/assets/logo_b.png" alt="Logo Foodfy">
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    {% block content %}
+    {% endblock content %}
+
+    <footer>
+        <p>Todos direitos reservados, receitas Foodfy.</p>
+    </footer>
+
+    <script src="/js/scripts.js"></script>
+</body>
+</html>
