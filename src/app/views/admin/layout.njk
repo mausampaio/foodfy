@@ -15,11 +15,19 @@
                     <img src="/assets/logo_b.png" alt="Logo Foodfy">
                 </a>
             </div>
+            <div class="admin-links">
+                <a href="/admin/recipes">RECEITAS</a>
+            </div>
+            <div class="admin-links">
+                <a href="/admin/chefs">CHEFS</a>
+            </div>
         </div>
     </header>
     
-    {% block content %}
-    {% endblock content %}
+    <section class="admin-container">
+        {% block content %}
+        {% endblock content %}
+    </section>
 
     <footer>
         <p>Todos direitos reservados, receitas Foodfy.</p>

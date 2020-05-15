@@ -16,14 +16,38 @@ body {
     padding-bottom: 26.1px;
     padding-left: 231px;
     background-color: #111111;
+    display: grid;
+    grid-template-columns: 110.6px 69px 47px;
+    grid-gap: 30px;
+    align-items: center;
+}
+
+.header-admin .admin-links {
+    text-align: left;
+}
+
+.header-admin .admin-links a {
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #999999;
+}
+
+.header-admin .admin-links .admin-link-active {
+    color: #ffffff;
 }
 
 .header {
-    padding: 30px;
-    width: 67.1%;
-    margin: 0 auto;
+    padding-top: 28px;
+    padding-bottom: 30px;
+    margin: 0 230px;
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 183px 42px 62px 42px 1fr;
+    align-items: center;
+    gap: 30px;
+}
+.header .logo {
+    max-height: 26.9px;
 }
 
 .logo img{
@@ -31,14 +55,81 @@ body {
 }
 
 .links {
-    text-align: left;
+    text-align: right;
 }
 
 .links a {
     font-size: 16px;
     color: #111111;
     text-decoration: none;
-    margin: 0 15px;
+}
+
+.header .links .link-active {
+    font-weight: bold;
+}
+
+.header form {
+    height: 37px;
+    display: grid;
+    grid-template-columns: 246px 91px;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.header form input {
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px 8px;
+    box-sizing: border-box;
+}
+
+.header form input::placeholder {
+    font-size: 14px;
+    color: #999999;
+}
+
+.header form button {
+    height: 100%;
+    padding: 8px 8px;
+}
+
+/*=== CONTAINER ===*/
+
+.container {
+    display: grid;
+    grid-template: 1fr / 1fr;
+    min-height: calc(100vh - 221px);
+}
+
+.admin-container {
+    min-height: calc(100vh - 260px);
+}
+
+/*=== PAGINATION ===*/
+
+.container .pagination {
+    margin: 0;
+    align-self: end;
+    justify-self: center;
+}
+
+.pagination a,
+.pagination span {
+    color: #777777;
+    text-decoration: none;
+    margin-right: 16px;
+}
+
+.pagination a:hover {
+    filter: brightness(0.3);
+    border-bottom: 1px solid #777777;
+}
+
+.pagination .page-active {
+    filter: brightness(0.3);
+    border-bottom: 1px solid #777777;
 }
 
 /*=== DESCRIPTION ===*/
@@ -58,56 +149,60 @@ body {
 }
 
 .description {
-    width: 67.1%;
     background: #FBDFDB;
     border-radius: 30px;
-    margin: 0 auto;
+    margin: 0 230px;
+    padding-left: 60px;
+    padding-right: 100px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: center;
 }
 
 .description .desc-text {
-    width: 18rem;
-    padding: 7rem 4rem;
+    width: 316px;
 }
 
 .description .desc-text h1 {
-    font-family: Roboto;
     font-weight: bold;
     font-size: 32px;
     color: #111111;
     padding-bottom: 0.7rem;
+    text-align: left;
 }
 
 .description .desc-text p {
     opacity: 0.7;
-    font-family: Roboto;
     font-size: 18px;
     color: #000000;
     line-height: 28px;
+    text-align: left;
 }
 
 .description .desc-img {
-    margin: auto auto 0 auto;
+    display: flex;
+    align-content: end;
+    justify-content: flex-end;
+}
+
+.description .desc-img img {
+    padding-top: 66px;
 }
 
 /*=== RECEITAS ===*/
 
 .wrapper {
-    margin-left: 16.4%;
-    padding-top: 2.5rem;
+    margin: 50px 230px 20px 230px;
 }
 
 .wrapper h1 {
-    font-family: Roboto;
     font-weight: bold;
     font-size: 24px;
     color: #111111;
 }
 
 .cards {
-    max-width: 67.1%;
-    margin: 20px auto;
+    margin: 0 230px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
@@ -127,6 +222,7 @@ body {
 }
 
 .card-title p {
+    text-align: left;
     font-size: 18px;
 }
 
@@ -135,11 +231,28 @@ body {
 }
 
 .card-author p {
+    text-align: left;
     font-size: 14px;
     color: #777777;
 }
 
-/*=== ADMIN ===*/
+/*=== CHEFS ===*/
+
+.chefs-cards .chef-card-main .chef-card-total p {
+    font-size: 14px;
+    color: #666666;
+    text-align: left;
+}
+
+.chef-card-main {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+/*=== ADMIN RECIPES===*/
 
 .list-title {
     margin-top: 50px;
@@ -173,7 +286,7 @@ body {
     max-height: 37px;
 }
 
-.admin-cards {
+.recipes-cards {
     padding: 0 230px;
     margin: 0 auto;
     display: grid;
@@ -181,38 +294,92 @@ body {
     gap: 20px;
 }
 
-.admin-card {
+.recipes-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-.admin-card-image-container img {
+.recipes-card-image-container img {
     width: 100%;
     border-radius: 8.57px;
 }
 
-.admin-card-content a {
+.recipes-card-content a {
     font-size: 14px;
     color: #6558C3;
     font-weight: bold;
     text-decoration: none;
 }
 
-.admin-card-title p {
+.recipes-card-title p {
     font-size: 18px;
     text-align: left;
 }
 
-.admin-card-author {
+.recipes-card-author {
     padding-top: 0.3rem;
     padding-bottom: 10px;
 }
 
-.admin-card-author p {
+.recipes-card-author p {
     text-align: left;
     font-size: 14px;
     color: #777777;
+}
+
+/*=== ADMIN CHEFS===*/
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+
+.chefs-cards {
+    padding: 0 230px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.chef-card {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.chef-recipes h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #111111;
+    margin: 30px 230px;
+}
+
+.chef-header {
+    text-align: center;
+}
+
+.avatar-big {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 42px auto 30px auto;
+}
+
+.chef-name p {
+    font-size: 36px;
+    font-weight: bold;
+    color: #111111;
+    margin-bottom: 4px;
+}
+
+.total-recipes {
+    font-size: 20px;
+    color: #777777;
+    margin-bottom: 20px;
 }
 
 /*=== ADMIN CREATE ===*/
@@ -228,7 +395,8 @@ body {
     padding-top: 30px;
 }
 
-.fields .item input{
+.fields .item input,
+.fields .item select{
     width: 100%;
     height: 49px;
     border: 1px solid #DDDDDD;
@@ -329,17 +497,18 @@ body {
 /*=== FOOTER ===*/
 
 footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 5.7%;
+    height: 62px;
     background: #EEEEEE;
     margin-top: 4rem;
 }
 
 footer p {
-    padding-top: 0.7rem;
     font-size: 14px;
     color: #999999;
-    text-align: center;
 }
 
 /*=== MODAL ===*/

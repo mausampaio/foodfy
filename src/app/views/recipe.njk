@@ -1,21 +1,20 @@
 <section class="recipe">
-        {% for item in itens %}
             <div>
                 <div class="card-image-container">
-                    <img src="{{item.image}}" alt="Imagem Receita">
+                    <img src="{{recipe.image}}" alt="Imagem Receita">
                 </div>
                 <div class="recipe-title">
-                    <p>{{item.title}}</p>
+                    <p>{{recipe.title}}</p>
                 </div>
                 <div class="recipe-author">
-                    <p>{{item.author}}</p>
+                    <p>por {{recipe.chef_name}}</p>
                 </div>
                 <div class="recipe-info">
                     <h3>Ingredientes</h3>
                     <span class="toggle-ingredients">ESCONDER</span>
                     <div id="ingredients">
                         <ul>
-                        {% for ingredients in item.ingredients %}
+                        {% for ingredients in recipe.ingredients %}
                             <li>{{ingredients}}</li>
                         {% endfor %}
                         </ul>
@@ -26,7 +25,7 @@
                     <span class="toggle-preparation">ESCONDER</span>
                     <div id="preparation">
                         <ul>
-                        {% for preparation in item.preparation %}
+                        {% for preparation in recipe.preparation %}
                             <li>{{preparation}}</li>
                         {% endfor %}
                         </ul>
@@ -36,9 +35,8 @@
                     <h3>Informações adicionais</h3>
                     <span class="toggle-info">ESCONDER</span>
                     <div id="info">
-                        <p>{{item.information}}</p>
+                        <p>{{recipe.information}}</p>
                     </div>
                 </div>
             </div>
-        {% endfor %}
 </section>

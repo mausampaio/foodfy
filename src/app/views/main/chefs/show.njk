@@ -1,0 +1,14 @@
+{% extends "main/layout.njk" %}
+
+{% block head %}
+    <title>{{chef.name}}</title>
+{% endblock %}
+
+{% block content %}
+    {% include 'chef.njk' %}
+
+    <section class="chef-recipes">
+        <h1>Receitas</h1>
+        {% include 'main/recipes/list.njk' %}
+    </section>
+{% endblock content %}
