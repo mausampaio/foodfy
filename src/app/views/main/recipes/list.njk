@@ -2,7 +2,7 @@
     {% for recipe in recipes %}
         <div class="card" id="{{recipe.id}}">
             <div class="card-image-container">
-                <img src="{{recipe.image}}" alt="Imagem Receita">
+                <img src="{{recipe.files.src}}" alt="{{recipe.files.name}}">
             </div>
             <div class="card-title">
                 <p>{{recipe.title}}</p>

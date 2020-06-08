@@ -6,18 +6,16 @@
 
 {% block content %}
     
-    <div class="list-title-edit">
+    <div class="list-title recipe-edit">
         <h1>Editando receita</h1>
         <form id="form-delete" method="POST" action="/admin/recipes?_method=DELETE">
-            <div class="delete">
                 <input type="hidden" name="id" value="{{recipe.id}}">
-                <button type="submit" class="button-delete">Deletar</button>
-            </div>
+                <button type="submit" class="button delete">Deletar</button>
         </form>
         <button form="edit" type="submit" class="button">Salvar receita</button>
     </div>
 
-    <form id="edit" method="POST" action="/admin/recipes?_method=PUT">
+    <form id="edit" method="POST" action="/admin/recipes?_method=PUT" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{recipe.id}}">
         
         {% include './fields.njk' %}

@@ -1,5 +1,11 @@
 <section class="chef-header">
-    <div class="avatar-big" style="background: url({{chef.avatar_url}}) no-repeat center center / cover"></div>
+    <div class="avatar-big">
+        {% if avatar == null %}
+            <img src="http://placehold.it/500x500?text=CHEF SEM FOTO">
+        {% else %}
+            <img src="{{avatar.src}}" alt="{{avatar.name}}">
+        {% endif %}
+    </div>
     <div class="chef-name">
         <p>{{chef.name}}</p>
     </div>

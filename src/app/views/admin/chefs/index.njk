@@ -12,7 +12,9 @@
     <section class="chefs-cards">
         {% for chef in chefs %}
             <div class="chef-card" id="{{chef.id}}">
-                <div class="avatar" style="background: url({{chef.avatar_url}}) no-repeat center center / cover"></div>
+                <div class="avatar">
+                    <img src="{{chef.avatar.src}}" alt="{{chef.avatar.name}}">
+                </div>
                 <div class="recipes-card-content">
                     <div class="recipes-card-title">
                         <p>{{chef.name}}</p>
