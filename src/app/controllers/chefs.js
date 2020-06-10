@@ -8,26 +8,29 @@ module.exports = {
         let results = await Chef.all();
         const chefs = results.rows;
 
-        let data = [];
-
-        for (chef of chefs) {
-            if (chef.file_id != null) {
-                results = await Chef.avatar(chef.file_id);
-                const avatar = results.rows[0];
-
-                console.log(avatar);
-                
-
-                avatarData = {
-                    ...avatar,
-                    src: `${req.protocol}://${req.headers.host}${avatar.path.replace("public", "")}`
-                };
-
-                data.push({avatar: avatarData, ...chef});
-            }else {
-                data.push({avatar: {src: "http://placehold.it/200x200?text=CHEF SEM FOTO"}, ...chef});
+        async function getAvatar(fileId) {
+            results = await Chef.avatar(fileId);
+            const avatar = results.rows[0];
+        
+            const avatarData = {
+                ...avatar,
+                src: `${req.protocol}://${req.headers.host}${avatar.path.replace("public", "")}`
             };
+
+            return avatarData;
         };
+        
+        const chefsPromise = chefs.map(async chef => {
+            if (chef.file_id != null) {
+                chef.avatar = await getAvatar(chef.file_id);
+            } else {
+                chef.avatar = {src: "http://placehold.it/200x200?text=CHEF SEM FOTO"};
+            };
+            
+            return chef;
+        })
+
+        const data = await Promise.all(chefsPromise);
 
         return res.render("admin/chefs/index", {chefs: data});
     },

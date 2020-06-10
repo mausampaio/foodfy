@@ -8,19 +8,40 @@ module.exports = {
         let results = await Recipe.all();
         const recipes = results.rows;
 
-        let data = [];
+        if (!recipes) return res.send('Recipes not found!');
 
-        for (recipe of recipes) {
-            results = await Recipe.files(recipe.id);
-            let files = results.rows.map(file => ({
+        async function getFiles(recipeId) {
+            
+            results = await Recipe.files(recipeId);
+            const files = results.rows.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
-            
-            data.push({files: files[0], ...recipe});
 
-            files = [];
-        };        
+            return files[0];
+        }
+
+        const recipesPromise = results.rows.map(async recipe => {
+            recipe.files = await getFiles(recipe.id);
+
+            return recipe;
+        });
+
+        const data = await Promise.all(recipesPromise);
+
+        // let data = [];
+
+        // for (recipe of recipes) {
+        //     results = await Recipe.files(recipe.id);
+        //     let files = results.rows.map(file => ({
+        //         ...file, 
+        //         src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        //     }));
+            
+        //     data.push({files: files[0], ...recipe});
+
+        //     files = [];
+        // };        
 
         return res.render("admin/recipes/index", {recipes: data});
     },
@@ -65,20 +86,16 @@ module.exports = {
         let results = await Recipe.create(req.body);
         const recipeId = results.rows[0].id;
 
-        let filesId = [];
-
         const filesPromise = req.files.map(async file => {
             results = await File.create({...file});
-            filesId.push(results.rows[0].id);
+            const fileId = results.rows[0].id; 
+
+            await Recipe_Files.create({recipe_id: recipeId, file_id: fileId});
 
             return
         });
 
         await Promise.all(filesPromise);
-
-        for (const id of filesId) {
-            results = await Recipe_Files.create({recipe_id: recipeId, file_id: id});
-        };
 
         return res.redirect(`/admin/recipes/${recipeId}`);
     },
@@ -114,21 +131,17 @@ module.exports = {
 
         const recipeId = req.body.id;
 
-        let filesId = [];
-
         if (req.files.length != 0) {
             const newFilesPromise = req.files.map(async file => {
                 results = await File.create({...file});
-                filesId.push(results.rows[0].id);
+                const fileId = results.rows[0].id;
+
+                await Recipe_Files.create({recipe_id: recipeId, file_id: fileId});
     
                 return
             });
 
             await Promise.all(newFilesPromise);
-
-            for (const id of filesId) {
-                results = await Recipe_Files.create({recipe_id: recipeId, file_id: id});
-            };
         };
 
         if (req.body.removed_files) {

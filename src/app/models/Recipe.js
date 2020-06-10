@@ -5,7 +5,8 @@ module.exports = {
     all() {
         return db.query(`SELECT recipes.*, chefs.name as chef_name 
         FROM recipes
-        LEFT JOIN chefs ON (recipes.chef_id = chefs.id)`);
+        LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+        ORDER BY recipes.updated_at DESC`);
     },
     highlights() {
         try {
