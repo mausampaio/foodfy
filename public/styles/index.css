@@ -431,7 +431,7 @@ footer p {
     margin-top: 50px;
     margin-left: 230px;
     margin-right: 230px;
-    padding-bottom: 30px;
+    padding-bottom: 70px;
     display: grid;
     grid-template-columns: 5fr 1fr;
 }
@@ -560,7 +560,9 @@ footer p {
 .fields .item input,
 .fields .item select,
 .fields .item textarea {
-    padding: 0 8px;
+    padding: 0 20px;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
 .fields .item input,

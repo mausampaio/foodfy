@@ -1,0 +1,21 @@
+.user-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+}
+
+.fields input::placeholder {
+    font-size: 16px;
+    color: #999;
+}
+
+.fields .item .is-admin {
+    display: flex;
+    align-items: center;
+}
+
+.fields .item .is-admin input {
+    width: initial;
+    height: initial;
+    margin-right: 8px;
+}
