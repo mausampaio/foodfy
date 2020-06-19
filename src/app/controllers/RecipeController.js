@@ -5,8 +5,25 @@ const Recipe_Files = require("../models/Recipe_Files");
 
 module.exports = {
     async index(req, res) {
-        let results = await Recipe.all();
+        let {page, limit} = req.query;
+    
+        page = page || 1;
+        limit = limit || 6;
+        let offset = limit * (page -1);
+
+        const params = {
+            page,
+            limit,
+            offset
+        };
+
+        let results = await Recipe.paginate(params);
         const recipes = results.rows;
+
+        const pagination = {
+            total: Math.ceil(recipes[0].total / limit),
+            page
+        };
 
         if (!recipes) return res.send('Recipes not found!');
 
@@ -43,7 +60,7 @@ module.exports = {
         //     files = [];
         // };        
 
-        return res.render("admin/recipes/index", {recipes: data});
+        return res.render("admin/recipes/index", {recipes: data, pagination});
     },
     async show(req, res) {
         let results = await Recipe.find(req.params.id);

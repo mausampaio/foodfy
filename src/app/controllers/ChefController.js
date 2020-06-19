@@ -5,8 +5,25 @@ const File = require("../models/File");
 
 module.exports = {
     async index(req, res) {
-        let results = await Chef.all();
+        let {page, limit} = req.query;
+    
+        page = page || 1;
+        limit = limit || 6;
+        let offset = limit * (page -1);
+
+        const params = {
+            page,
+            limit,
+            offset
+        };
+
+        let results = await Chef.paginate(params);
         const chefs = results.rows;
+
+        const pagination = {
+            total: Math.ceil(chefs[0].total / limit),
+            page
+        };
 
         async function getAvatar(fileId) {
             results = await Chef.avatar(fileId);
@@ -32,7 +49,7 @@ module.exports = {
 
         const data = await Promise.all(chefsPromise);
 
-        return res.render("admin/chefs/index", {chefs: data});
+        return res.render("admin/chefs/index", {chefs: data, pagination});
     },
     async show(req, res) {
         let results = await Chef.find(req.params.id);

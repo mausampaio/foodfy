@@ -19,7 +19,7 @@ body {
 }
 
 .admin-container {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 280px);
 }
 
 .button {
