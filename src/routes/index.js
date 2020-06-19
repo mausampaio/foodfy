@@ -1,16 +1,12 @@
 const express = require('express');
 const routes = express.Router();
-const multer = require('./app/middlewares/multer');
-const main = require('./app/controllers/main');
-const recipes = require('./app/controllers/recipes');
-const chefs = require('./app/controllers/chefs');
+const multer = require('../app/middlewares/multer');
+const recipes = require('../app/controllers/recipes');
+const chefs = require('../app/controllers/chefs');
 
-routes.get("/", main.index);
-routes.get("/about", main.about);
-routes.get("/recipes", main.recipes);
-routes.get("/chefs", main.chefs);
-routes.get("/recipes/:id", main.recipe);
-routes.get("/chefs/:id", main.chef);
+const main = require('./main');
+
+routes.use("", main);
 
 routes.get("/admin/recipes", recipes.index);
 routes.get("/admin/recipes/create", recipes.create);
@@ -27,9 +23,5 @@ routes.get("/admin/chefs/:id/edit", chefs.edit);
 routes.post("/admin/chefs", multer.array("avatar", 1), chefs.post);
 routes.put("/admin/chefs", multer.array("avatar", 1), chefs.put);
 routes.delete("/admin/chefs", chefs.delete);
-
-
-
-
 
 module.exports = routes;
