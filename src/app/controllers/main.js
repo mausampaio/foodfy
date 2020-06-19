@@ -43,19 +43,24 @@ module.exports = {
         let results = await Recipe.paginate(params);
         const recipes = results.rows;
 
-        let data = [];
-
-        for (recipe of recipes) {
-            results = await Recipe.files(recipe.id);
-            let files = results.rows.map(file => ({
+        async function getFiles(recipeId) {
+            
+            results = await Recipe.files(recipeId);
+            const files = results.rows.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
-            
-            data.push({files: files[0], ...recipe});
 
-            files = [];
-        };
+            return files[0];
+        }
+
+        const recipesPromise = recipes.map(async recipe => {
+            recipe.files = await getFiles(recipe.id);
+
+            return recipe;
+        });
+
+        const data = await Promise.all(recipesPromise); 
 
         if (Array.isArray(recipes) && recipes.length) {
             const pagination = {
