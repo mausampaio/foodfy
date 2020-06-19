@@ -9,11 +9,7 @@
         {% for chef in chefs %}
             <div class="chef-card-main" id="{{chef.id}}">
                 <div class="avatar">
-                    {% if avatar == null %}
-                        <img src="http://placehold.it/500x500?text=CHEF SEM FOTO">
-                    {% else %}
-                        <img src="{{avatar.src}}" alt="{{avatar.name}}">
-                    {% endif %}
+                    <img src="{{chef.avatar.src}}" alt="{{chef.avatar.name}}">
                 </div>
                 <div class="recipes-card-content">
                     <div class="recipes-card-title">

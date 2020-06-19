@@ -78,26 +78,29 @@ module.exports = {
         let results = await Chef.all();
         const chefs = results.rows;
 
-        let data = [];
-
-        for (chef of chefs) {
-            if (chef.file_id != null) {
-                results = await Chef.avatar(chef.file_id);
-                const avatar = results.rows[0];
-
-                console.log(avatar);
-                
-
-                avatarData = {
-                    ...avatar,
-                    src: `${req.protocol}://${req.headers.host}${avatar.path.replace("public", "")}`
-                };
-
-                data.push({avatar: avatarData, ...chef});
-            }else {
-                data.push({avatar: {src: "http://placehold.it/200x200?text=CHEF SEM FOTO"}, ...chef});
+        async function getAvatar(fileId) {
+            results = await Chef.avatar(fileId);
+            const avatar = results.rows[0];
+        
+            const avatarData = {
+                ...avatar,
+                src: `${req.protocol}://${req.headers.host}${avatar.path.replace("public", "")}`
             };
+
+            return avatarData;
         };
+
+        const chefsPromise = chefs.map(async chef => {
+            if (chef.file_id != null) {
+                chef.avatar = await getAvatar(chef.file_id);
+            } else {
+                chef.avatar = {src: "http://placehold.it/200x200?text=CHEF SEM FOTO"};
+            };
+            
+            return chef;
+        })
+
+        const data = await Promise.all(chefsPromise);
 
         return res.render("main/chefs/chefs", {chefs: data});
     },
@@ -144,19 +147,24 @@ module.exports = {
         results = await Recipe.findByChef(chef.id);
         const recipes = results.rows;
 
-        let data = [];
-
-        for (recipe of recipes) {
-            results = await Recipe.files(recipe.id);
-            let files = results.rows.map(file => ({
+        async function getFiles(recipeId) {
+            
+            results = await Recipe.files(recipeId);
+            const files = results.rows.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
-            
-            data.push({files: files[0], ...recipe});
 
-            files = [];
-        };
+            return files[0];
+        }
+
+        const recipesPromise = recipes.map(async recipe => {
+            recipe.files = await getFiles(recipe.id);
+
+            return recipe;
+        });
+
+        const data = await Promise.all(recipesPromise); 
 
         return res.render("main/chefs/show", {chef, recipes: data, avatar: avatarData});
     }
