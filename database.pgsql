@@ -25,6 +25,7 @@ CREATE TABLE "recipe_files" (
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
   "chef_id" int,
+  "user_id" int,
   "title" text,
   "ingredients" text[],
   "preparation" text[],
@@ -33,10 +34,24 @@ CREATE TABLE "recipes" (
   "updated_at" timestamp DEFAULT (now())
 );
 
+CREATE TABLE "users" (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  reset_token TEXT,
+  reset_token_expires TEXT,
+  is_admin BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT(now()),
+  updated_at TIMESTAMP DEFAULT(now())
+);
+
 -- CREATE CONSTRAINTS
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
 
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
+
+ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 -- CREATE PROCEDURE
 CREATE FUNCTION trigger_set_timeout()
@@ -50,6 +65,12 @@ $$ LANGUAGE plpgsql;
 -- AUTO UPDATED_AT PRODUCTS
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON recipes
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timeout();
+
+-- AUTO UPDATED_AT USERS
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON users
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timeout();
 

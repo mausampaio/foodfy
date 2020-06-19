@@ -66,13 +66,18 @@ footer p {
     padding-left: 231px;
     background-color: #111111;
     display: grid;
-    grid-template-columns: 110.6px 69px 47px;
+    grid-template-columns: 110.6px 69px 47px 80px 1fr;
     grid-gap: 30px;
     align-items: center;
 }
 
 .header-admin .admin-links {
     text-align: left;
+}
+
+.header-admin .sair {
+    justify-self: right;
+    padding-right: 50px;
 }
 
 .header-admin .admin-links a {

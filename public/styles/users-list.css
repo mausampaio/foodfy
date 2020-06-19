@@ -1,0 +1,44 @@
+.users-cards {
+    margin: 0 230px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.users-cards .users-card {
+    margin-bottom: 32px;
+}
+
+.users-cards .users-card-name {
+    font-size: 18px;
+    color: #111;
+}
+
+.users-cards .users-card-email {
+    font-size: 14px;
+    color: #777;
+    padding-top: 4px;
+    padding-bottom: 16px;
+}
+
+.users-cards .action {
+    display: grid;
+    grid-template-columns: 40px 60px;
+    gap: 16px;
+}
+
+.users-cards .action a {
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    color: #6558C3;
+    align-self: center;
+}
+
+.users-cards .action button {
+    font-weight: bold;
+    font-size: 14px;
+    color: #F55A5A;
+    background-color: white;
+    cursor: pointer;
+}

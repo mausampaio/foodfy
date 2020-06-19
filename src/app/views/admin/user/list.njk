@@ -1,0 +1,13 @@
+{% extends "admin/layout.njk" %}
+
+{% block head %}
+    <title>Foodfy Admin</title>
+{% endblock head %}
+
+{% block content %}
+    <div class="list-title">
+        <h1>Usuários</h1>
+    </div>
+
+    {% include 'admin/user/users.njk' %}
+{% endblock content %}

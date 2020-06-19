@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const main = require('../app/controllers/main');
+const main = require('../app/controllers/MainController');
 
 routes.get("/", main.index);
 routes.get("/about", main.about);

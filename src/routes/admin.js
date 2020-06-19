@@ -1,8 +1,8 @@
 const express = require('express');
 const routes = express.Router();
 const multer = require('../app/middlewares/multer');
-const recipes = require('../app/controllers/recipes');
-const chefs = require('../app/controllers/chefs');
+const recipes = require('../app/controllers/RecipeController');
+const chefs = require('../app/controllers/ChefController');
 
 routes.get("/recipes", recipes.index);
 routes.get("/recipes/create", recipes.create);
