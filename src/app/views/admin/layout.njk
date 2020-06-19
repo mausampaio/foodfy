@@ -4,36 +4,16 @@
     {% block head %}
         <title>Foodfy Admin</title>
     {% endblock head %}
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    {%include "parts/styles.njk"%}
 </head>
 <body>
-    <header>
-        <div class="header-admin">
-            <div class="logo">
-                <a href="/admin/recipes">
-                    <img src="/assets/logo_b.png" alt="Logo Foodfy">
-                </a>
-            </div>
-            <div class="admin-links">
-                <a href="/admin/recipes">RECEITAS</a>
-            </div>
-            <div class="admin-links">
-                <a href="/admin/chefs">CHEFS</a>
-            </div>
-        </div>
-    </header>
+    {%include "parts/admin-header.njk"%}
     
     <section class="admin-container">
         {% block content %}
         {% endblock content %}
     </section>
 
-    <footer>
-        <p>Todos direitos reservados, receitas Foodfy.</p>
-    </footer>
-
-    <script src="/js/scripts.js"></script>
+    {%include "parts/footer.njk"%}
 </body>
 </html>
