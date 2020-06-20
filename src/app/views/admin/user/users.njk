@@ -18,4 +18,14 @@
             </div>
         </div>
     {% endfor %}
+
+    <script>
+        const formDelete = document.querySelector("#form-delete");
+        formDelete.addEventListener("submit", function(event){
+            const confirmation = confirm("Tem certeza que deseja deletar? Essa operação não tem retorno!");
+            if (!confirmation) {
+                event.preventDefault();
+            };
+        });
+    </script>
 </section>
