@@ -1,0 +1,22 @@
+<div class="user-fields fields">
+    <div class="item">
+        <div class="title">Nome</div>
+        <div class="input">
+            <input type="text" name="name" value="{{user.name}}" placeholder="Digite o nome completo">
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">E-mail</div>
+        <div class="input">
+            <input type="email" name="email" value="{{user.email}}" placeholder="Digite o email" onblur="Validate.apply(this, 'isEmail')">
+        </div>
+    </div>
+
+    <div class="item">
+        <div class="title">Senha</div>
+        <div class="input">
+            <input type="password" name="password" placeholder="Digite sua senha">
+        </div>
+    </div>
+</div>

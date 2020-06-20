@@ -1,0 +1,36 @@
+.login-header {
+    display: flex;
+    justify-content: center;
+}
+
+.login-container {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 116px;
+}
+
+.login-container .login-title h1 {
+    text-align: center;
+}
+
+.login-container .footer {
+    margin-top: 35px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-container .footer a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #969696;
+    align-self: center;
+}
+
+.login-container .footer a:hover {
+    color: #111;
+    font-weight: bold;
+}
+
+.login-container .footer button {
+    width: 134px;
+}

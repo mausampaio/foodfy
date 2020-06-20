@@ -560,30 +560,30 @@ footer p {
     padding: 0 230px;
 }
 
-.fields .item .title {
+.item .title {
     font-size: 16px;
     color: #111111;
     padding-bottom: 10px;
     padding-top: 30px;
 }
 
-.fields .item input,
-.fields .item select,
-.fields .item textarea {
+.item input,
+.item select,
+.item textarea {
     padding: 0 20px;
     font-size: 16px;
     box-sizing: border-box;
 }
 
-.fields .item input,
-.fields .item select{
+.item input,
+.item select{
     width: 100%;
     height: 49px;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
 }
 
-.fields .item textarea{
+.item textarea{
     width: 100%;
     height: 257px;
     border: 1px solid #DDDDDD;

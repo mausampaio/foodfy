@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Login Foodfy</title>
+    {% endblock head %}
+    {%include "parts/styles.njk"%}
+</head>
+<body>
+    {%include "parts/messages.njk"%}
+
+    {%include "parts/login-header.njk"%}
+    
+    <section class="login-container">
+        {% block content %}
+        {% endblock content %}
+    </section>
+
+</body>
+</html>
