@@ -6,7 +6,7 @@ module.exports = {
         let {page, limit} = req.query;
     
         page = page || 1;
-        limit = limit || 4;
+        limit = limit || 6;
         let offset = limit * (page -1);
 
         const params = {
