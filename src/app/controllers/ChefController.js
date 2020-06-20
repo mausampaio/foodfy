@@ -49,7 +49,7 @@ module.exports = {
 
         const data = await Promise.all(chefsPromise);
 
-        return res.render("admin/chefs/index", {chefs: data, pagination});
+        return res.render("admin/chefs/index", {chefs: data, pagination, user: req.user});
     },
     async show(req, res) {
         let results = await Chef.find(req.params.id);
@@ -77,6 +77,55 @@ module.exports = {
         
 
         results = await Chef.findRecipes(req.params.id);
+        const recipes = results.rows;
+
+        async function getFiles(recipeId) {
+            
+            results = await Recipe.files(recipeId);
+            const files = results.rows.map(file => ({
+                ...file, 
+                src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+            }));
+
+            return files[0];
+        }
+
+        const recipesPromise = recipes.map(async recipe => {
+            recipe.files = await getFiles(recipe.id);
+
+            return recipe;
+        });
+
+        const data = await Promise.all(recipesPromise); 
+
+        return res.render("admin/chefs/show", {chef, recipes: data, avatar: avatarData});
+    },
+    async restrictedShow(req, res) {
+        let results = await Chef.find(req.params.id);
+        const chef = results.rows[0];
+
+        if (!chef) return res.send("Chef not found!");
+
+        chef.created_at = date(chef.created_at).format;
+
+        results = await Chef.avatar(chef.file_id);
+        const avatar = results.rows[0];
+
+        let avatarData = {};
+
+        if (avatar) {
+            avatarData = {
+                ...avatar,
+                src: `${req.protocol}://${req.headers.host}${avatar.path.replace("public", "")}`
+            };
+        };
+
+        if (Object.keys(avatarData).length == 0) {
+            avatarData = null;
+        };
+        
+
+        results = await Chef.findRecipesByUser(req.user.id, req.params.id);
         const recipes = results.rows;
 
         async function getFiles(recipeId) {

@@ -101,7 +101,7 @@ module.exports = {
 
         const data = await Promise.all(recipesPromise);      
 
-        return res.render("admin/recipes/index", {recipes: data, pagination});
+        return res.render("admin/recipes/index", {recipes: data, pagination, user: req.user});
     },
     async show(req, res) {
         let results = await Recipe.find(req.params.id);

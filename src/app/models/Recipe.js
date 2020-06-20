@@ -61,12 +61,22 @@ module.exports = {
     findByUser(params) {
         try {
             const { limit, offset, userId } = params;
-
+            
             return db.query(`SELECT recipes.* 
             FROM recipes
             LEFT JOIN users ON (recipes.user_id = users.id) 
-            WHERE chef_id = $1
+            WHERE user_id = $1
             LIMIT $2 OFFSET $3`, [userId, limit, offset]);
+        }catch(err) {
+            throw `Database Error! ${err}`;
+        };
+    },
+    findByUserId(userId) {
+        try {           
+            return db.query(`SELECT recipes.* 
+            FROM recipes
+            LEFT JOIN users ON (recipes.user_id = users.id) 
+            WHERE user_id = $1`, [userId]);
         }catch(err) {
             throw `Database Error! ${err}`;
         };

@@ -10,7 +10,9 @@
 {% block content %}
     <div class="list-title">
         <h1>Chef: {{chef.name}}</h1>
+        {% if user.is_admin %}
         <a href="/admin/chefs/{{chef.id}}/edit" class="button" >Editar chef</a>
+        {% endif %}
     </div>
 
     {% include 'chef.njk' %}

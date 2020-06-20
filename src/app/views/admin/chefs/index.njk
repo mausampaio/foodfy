@@ -7,7 +7,9 @@
 {% block content %}
     <div class="list-title">
         <h1>Gerenciar chefs</h1>
+        {% if user.is_admin %}
         <a href="/admin/chefs/create" class="button" >Novo</a>
+        {% endif %}
     </div>
 
     <section class="chefs-cards">
