@@ -1,8 +1,3 @@
-.pagination {
-    display: flex;
-    justify-content: center;
-}
-
 .users-cards {
     margin: 0 230px;
     display: grid;

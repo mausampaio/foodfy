@@ -20,6 +20,7 @@ body {
 
 .admin-container {
     min-height: calc(100vh - 280px);
+    box-sizing: border-box;
 }
 
 .button {
@@ -159,11 +160,20 @@ footer p {
     justify-self: center;
 }
 
+.pagination {
+    max-height: 20.2px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+}
+
 .pagination a,
 .pagination span {
     color: #777777;
     text-decoration: none;
     margin-right: 16px;
+    align-self: flex-start;
 }
 
 .pagination a:hover {
