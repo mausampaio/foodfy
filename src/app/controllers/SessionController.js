@@ -5,7 +5,13 @@ module.exports = {
     login(req, res) {
         req.session.userId = req.user.id;
 
-        return res.redirect("/admin/users");
+        const user = req.user;
+
+        if (user.is_admin == false) {
+            return res.render("admin/profile/index", {user});
+        } else {
+            return res.redirect("/admin/users");
+        };
     },
     logout(req, res) {
         req.session.destroy()
