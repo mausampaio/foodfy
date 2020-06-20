@@ -104,6 +104,14 @@ module.exports = {
         let results = await Chef.find(req.params.id);
         const chef = results.rows[0];
 
+        results = await Chef.findByUser(req.params.id, req.user.id);
+        
+        if (results.rows[0] == undefined) {
+            chef.total_recipes = 0;
+        } else {
+            chef.total_recipes = results.rows[0].total_recipes;
+        };
+
         if (!chef) return res.send("Chef not found!");
 
         chef.created_at = date(chef.created_at).format;
