@@ -65,5 +65,12 @@ module.exports = {
                 error: "Algum erro aconteceu!"
             });
         };
+    },
+    async delete(req, res) {
+        const id = req.body.id;
+
+        await User.delete(id);
+
+        return res.redirect('/admin/users');
     }
 };
