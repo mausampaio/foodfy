@@ -73,5 +73,34 @@ module.exports = {
         }catch(err) {
             throw `Database Error! ${err}`;
         };
+    },
+    findById(id) {
+        return db.query(`SELECT * FROM users
+        WHERE users.id = ${id}
+        `);
+    },
+    async update(data) {
+        const query = `
+            UPDATE users SET
+                name=$1,
+                email=$2,
+                is_admin=$3
+            WHERE id = $4
+        `;
+
+        if (data.is_admin != "true") {
+            data.is_admin = false;
+        } else {
+            data.is_admin = true;
+        };
+
+        const values = [
+            data.name,
+            data.email,
+            data.is_admin,
+            data.id
+        ];
+
+        return db.query(query, values);
     }
 };

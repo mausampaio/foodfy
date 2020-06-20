@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { put } = require('../../routes/users');
 
 module.exports = {
     async list(req, res) {
@@ -31,5 +32,38 @@ module.exports = {
         await User.create(req.body);
 
         return res.redirect('/admin/users');
+    },
+    async edit(req, res) {
+        const id = req.params.id;
+
+        const results = await User.findById(id);
+        const user = results.rows[0];
+
+        return res.render("admin/user/edit", {user});
+    },
+    async put(req, res) {
+        try {
+            const { id, name, email, is_admin } = req.body;
+
+            const data = {
+                id,
+                name,
+                email,
+                is_admin
+            };
+
+            await User.update(data);
+
+            return res.render("admin/user/edit", {
+                user: data,
+                success: "Usuário atualizado com sucesso."
+            });
+        } catch(err) {
+            console.error(err);
+            return res.render("admin/user/edit", {
+                user: req.body,
+                error: "Algum erro aconteceu!"
+            });
+        };
     }
 };

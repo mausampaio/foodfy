@@ -1,0 +1,32 @@
+{% extends "admin/layout.njk" %}
+
+{% block head %}
+    <title>Atualizar usuário</title>
+{% endblock %}
+
+{% block content %}
+    <div class="list-title recipe-edit">
+        <h1>Atualizar usuário</h1>
+        <form id="form-delete" method="POST" action="/admin/users?_method=DELETE">
+                <input type="hidden" name="id" value="{{user.id}}">
+                <button type="submit" class="button delete">Deletar</button>
+        </form>
+        <button form="edit" type="submit" class="button">Salvar</button>
+    </div>
+
+    <form id="edit" method="POST" action="/admin/users?_method=PUT">
+        <input type="hidden" name="id" value="{{user.id}}">
+        
+        {% include './fields.njk' %}
+    </form>
+
+    <script>
+        const formDelete = document.querySelector("#form-delete");
+        formDelete.addEventListener("submit", function(event){
+            const confirmation = confirm("Tem certeza que deseja deletar? Essa operação não tem retorno!");
+            if (!confirmation) {
+                event.preventDefault();
+            };
+        });
+    </script>
+{% endblock content %}

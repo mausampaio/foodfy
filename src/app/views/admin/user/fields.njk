@@ -15,7 +15,13 @@
 
     <div class="item">
         <div class="is-admin">
-            <input id="is_admin" type="checkbox" name="is_admin" value="true">
+            <input 
+                id="is_admin" 
+                type="checkbox" 
+                name="is_admin" 
+                value="true"
+                {% if user.is_admin == true %}checked{% endif %}
+            >
             <label for="is_admin">Administrador</label>
         </div>
     </div>
