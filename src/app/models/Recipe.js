@@ -26,7 +26,7 @@ module.exports = {
                 ingredients,
                 preparation,
                 information,
-                created_at
+                user_id
             ) VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING id
         `;
@@ -37,7 +37,7 @@ module.exports = {
             data.ingredients,
             data.preparation,
             data.information,
-            date(Date.now()).iso
+            data.user_id
         ];
 
         return db.query(query, values);
@@ -54,6 +54,19 @@ module.exports = {
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id) 
             WHERE chef_id = $1`, [chefId]);
+        }catch(err) {
+            throw `Database Error! ${err}`;
+        };
+    },
+    findByUser(params) {
+        try {
+            const { limit, offset, userId } = params;
+
+            return db.query(`SELECT recipes.* 
+            FROM recipes
+            LEFT JOIN users ON (recipes.user_id = users.id) 
+            WHERE chef_id = $1
+            LIMIT $2 OFFSET $3`, [userId, limit, offset]);
         }catch(err) {
             throw `Database Error! ${err}`;
         };

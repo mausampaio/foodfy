@@ -44,21 +44,62 @@ module.exports = {
             return recipe;
         });
 
-        const data = await Promise.all(recipesPromise);
+        const data = await Promise.all(recipesPromise);      
 
-        // let data = [];
+        return res.render("admin/recipes/index", {recipes: data, pagination});
+    },
+    async restrictedIndex(req, res) {
+        let {page, limit} = req.query;
+    
+        page = page || 1;
+        limit = limit || 4;
+        let offset = limit * (page -1);
 
-        // for (recipe of recipes) {
-        //     results = await Recipe.files(recipe.id);
-        //     let files = results.rows.map(file => ({
-        //         ...file, 
-        //         src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-        //     }));
+        const params = {
+            page,
+            limit,
+            offset,
+            userId: req.session.userId
+        };
+
+        let results = await Recipe.findByUser(params);
+        const recipes = results.rows;
+
+        let pagination = {};
+
+        if (Array.isArray(recipes) && recipes.length) {
+            pagination = {
+                total: Math.ceil(recipes[0].total / limit),
+                page
+            };
+        } else {
+            pagination = {
+                total: 0,
+                page
+            };
+        }
+        
+
+        if (!recipes) return res.send('Recipes not found!');
+
+        async function getFiles(recipeId) {
             
-        //     data.push({files: files[0], ...recipe});
+            results = await Recipe.files(recipeId);
+            const files = results.rows.map(file => ({
+                ...file, 
+                src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+            }));
 
-        //     files = [];
-        // };        
+            return files[0];
+        }
+
+        const recipesPromise = results.rows.map(async recipe => {
+            recipe.files = await getFiles(recipe.id);
+
+            return recipe;
+        });
+
+        const data = await Promise.all(recipesPromise);      
 
         return res.render("admin/recipes/index", {recipes: data, pagination});
     },
@@ -100,7 +141,12 @@ module.exports = {
 
         if (req.files.length == 0) return res.send('Please, send at least one image');
 
-        let results = await Recipe.create(req.body);
+        const data = {
+            ...req.body,
+            user_id: req.session.userId
+        };
+
+        let results = await Recipe.create(data);
         const recipeId = results.rows[0].id;
 
         const filesPromise = req.files.map(async file => {
