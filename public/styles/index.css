@@ -726,3 +726,12 @@ form .item #avatar-preview img {
     border-radius: 50%;
     object-fit: cover;
 }
+
+/* VALIDATE ERRORS */
+
+.input .error {
+    background-color: rgba(231, 76, 60, 0.8);
+    padding: 4px;
+    border-radius: 4px;
+    color: white;
+}
