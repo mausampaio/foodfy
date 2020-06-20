@@ -76,16 +76,22 @@ footer p {
     text-align: left;
 }
 
-.header-admin .sair {
+.header-admin .exit {
     justify-self: right;
     padding-right: 50px;
 }
 
-.header-admin .admin-links a {
+.header-admin .admin-links a,
+.header-admin .admin-links button {
     font-size: 15px;
     font-weight: bold;
     text-decoration: none;
     color: #999999;
+}
+
+.header-admin .admin-links button {
+    background-color: #111;
+    cursor: pointer;
 }
 
 .header-admin .admin-links .admin-link-active {

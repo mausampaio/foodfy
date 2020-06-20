@@ -8,6 +8,7 @@ const SessionValidator = require('../app/middlewares/validators/session');
 
 routes.get('/login', SessionController.index);
 routes.post('/login', SessionValidator.login, SessionController.login);
+routes.post('/logout', SessionController.logout);
 
 routes.get('/', UserController.list);
 routes.get('/create', UserController.create);
