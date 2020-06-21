@@ -78,8 +78,10 @@ module.exports = {
                 page
             };
         }
-        
 
+        console.log(pagination);
+        
+        
         if (!recipes) return res.send('Recipes not found!');
 
         async function getFiles(recipeId) {
@@ -101,7 +103,7 @@ module.exports = {
 
         const data = await Promise.all(recipesPromise);      
 
-        return res.render("admin/recipes/index", {recipes: data, pagination, user: req.user});
+        return res.render("admin/recipes/index", {recipes: data, pagination});
     },
     async show(req, res) {
         let results = await Recipe.find(req.params.id);

@@ -61,9 +61,15 @@ module.exports = {
     findByUser(params) {
         try {
             const { limit, offset, userId } = params;
+
+            const totalQuery = `(SELECT count(*) FROM recipes
+            LEFT JOIN users ON (recipes.user_id = users.id) 
+            WHERE user_id = ${userId}
+            ) AS total`
             
-            return db.query(`SELECT recipes.* 
+            return db.query(`SELECT recipes.*, ${totalQuery},chefs.name as chef_name 
             FROM recipes
+            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
             LEFT JOIN users ON (recipes.user_id = users.id) 
             WHERE user_id = $1
             LIMIT $2 OFFSET $3`, [userId, limit, offset]);
@@ -126,7 +132,7 @@ module.exports = {
 
             query = `SELECT recipes.*, ${totalQuery}, chefs.name AS chef_name 
             FROM recipes
-            LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+            LEFT JOIN chefs ON (chefs.id = recies.chef_id)
             ${filterQuery}
             LIMIT $1 OFFSET $2`;
 
