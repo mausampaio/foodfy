@@ -2,12 +2,15 @@ const User = require('../../models/User');
 const Recipe = require('../../models/Recipe');
 const RecipeController = require('../../../app/controllers/RecipeController');
 const ChefController = require('../../../app/controllers/ChefController');
+const ProfileController = require('../../../app/controllers/ProfileController');
 
 async function onlyAdmin(req, res, next) {
     const results = await User.findById(req.session.userId);
     const user = results.rows[0];
 
-    if (!user.is_admin) return res.render("admin/profile/index", {user});
+    req.user = user;
+
+    if (!user.is_admin) return ProfileController.index(req, res);
 
     next();
 };
