@@ -26,6 +26,16 @@
             const confirmation = confirm("Tem certeza que deseja deletar? Essa operação não tem retorno!");
             if (!confirmation) {
                 event.preventDefault();
+            } else {
+                if ({{user.total_recipes}} != 0) {
+                    alert('Usuários que possuem receitas não podem ser deletados!')
+                    event.preventDefault();
+                } else {
+                    if ({{session.userId}} == {{user.id}}) {
+                        alert('Não é possível deletar seu próprio usuário!')
+                        event.preventDefault();
+                    };
+                };
             };
         });
     </script>

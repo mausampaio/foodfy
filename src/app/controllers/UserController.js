@@ -36,7 +36,7 @@ module.exports = {
     async edit(req, res) {
         const id = req.params.id;
 
-        const results = await User.findById(id);
+        const results = await User.totalRecipes(id);
         const user = results.rows[0];
 
         return res.render("admin/user/edit", {user});

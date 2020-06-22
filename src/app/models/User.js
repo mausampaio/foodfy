@@ -79,6 +79,14 @@ module.exports = {
         WHERE users.id = ${id}
         `);
     },
+    async totalRecipes(userId) {
+        return db.query(`SELECT users.*, count(recipes) AS total_recipes
+        FROM users
+        LEFT JOIN recipes ON (recipes.user_id = users.id)
+        WHERE users.id = ${userId}
+        GROUP BY users.id
+        `);
+    },
     async findOne(filters) {
         let query = "SELECT * FROM users";
 

@@ -7,7 +7,8 @@ function onlyUsers(req, res, next) {
 };
 async function isLogged(req, res, next) {
     if (req.session.userId) {
-        const user = await User.findOne({where: {id: req.session.userId}});
+        const results = await User.totalRecipes(req.session.userId);
+        const user = results.rows[0];
 
         if (user.is_admin) {
             return res.render(`admin/user/edit`, {user});
