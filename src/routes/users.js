@@ -12,6 +12,11 @@ routes.get('/login', isLogged, SessionController.index);
 routes.post('/login', SessionValidator.login, SessionController.login);
 routes.post('/logout', SessionController.logout);
 
+routes.get('/forgot-password', SessionController.forgotForm);
+routes.get('/password-reset', SessionController.resetForm);
+routes.post('/forgot-password', SessionValidator.forgot, SessionController.forgot);
+routes.post('/password-reset', SessionValidator.reset, SessionController.reset);
+
 routes.get('/', onlyUsers, onlyAdmin, UserController.list);
 routes.get('/create', onlyUsers, onlyAdmin, UserController.create);
 routes.get('/:id/edit', onlyUsers, onlyAdmin, UserController.edit);

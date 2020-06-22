@@ -17,8 +17,7 @@ module.exports = {
             const data = {
                 name,
                 email,
-                is_admin: false,
-                id
+                is_admin: false
             };
 
             const user = await User.findOne({where: {id}});
@@ -30,7 +29,7 @@ module.exports = {
                 error: "Senha incorreta"
             });
 
-            await User.update(data);
+            await User.update(id, data);
 
             return res.render("admin/profile/index", {
                 user: data,

@@ -10,7 +10,7 @@ async function isLogged(req, res, next) {
         const user = await User.findOne({where: {id: req.session.userId}});
 
         if (user.is_admin) {
-            return res.redirect(`/admin/users/${user.id}/edit`);
+            return res.render(`admin/user/edit`, {user});
         } else {
             return res.redirect('/admin/profile');
         };

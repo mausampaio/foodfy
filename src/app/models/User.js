@@ -94,29 +94,20 @@ module.exports = {
 
         return results.rows[0];
     },
-    async update(data) {
-        const query = `
-            UPDATE users SET
-                name=$1,
-                email=$2,
-                is_admin=$3
-            WHERE id = $4
-        `;
+    async update(id, data) {
+        let query = "UPDATE users SET";
 
-        if (data.is_admin != "true") {
-            data.is_admin = false;
-        } else {
-            data.is_admin = true;
-        };
+        Object.keys(data).map((key, index, array) => {
+            if ((index+ 1) < array.length) {
+                query = `${query} ${key} = '${data[key]}',`
+            } else {
+                query = `${query} ${key} = '${data[key]}'
+                WHERE id = ${id}`
+            };
+        });
 
-        const values = [
-            data.name,
-            data.email,
-            data.is_admin,
-            data.id
-        ];
-
-        return db.query(query, values);
+        await db.query(query);
+        return;
     },
     delete(id) {
         return db.query(`DELETE FROM users WHERE id = $1`, [id]);

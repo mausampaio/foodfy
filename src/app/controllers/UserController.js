@@ -43,16 +43,21 @@ module.exports = {
     },
     async put(req, res) {
         try {
-            const { id, name, email, is_admin } = req.body;
+            let { id, name, email, is_admin } = req.body;
+
+            if (is_admin != "true") {
+                is_admin = false;
+            } else {
+                is_admin = true;
+            };
 
             const data = {
-                id,
                 name,
                 email,
                 is_admin
             };
 
-            await User.update(data);
+            await User.update(id, data);
 
             return res.render("admin/user/edit", {
                 user: data,

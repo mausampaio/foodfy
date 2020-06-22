@@ -19,6 +19,10 @@
     justify-content: space-between;
 }
 
+.login-container .recovery {
+    justify-content: flex-end;
+}
+
 .login-container .footer a {
     text-decoration: none;
     font-size: 16px;

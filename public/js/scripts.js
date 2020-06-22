@@ -9,7 +9,6 @@ const currentPage = location.pathname;
 const menuItensAdmin = document.querySelectorAll(".header-admin .admin-links a");
 const menuItens = document.querySelectorAll(".header .links a");
 
-
 for (item of menuItensAdmin) {  
     if (currentPage.includes(item.getAttribute("href"))) {
         item.classList.add('admin-link-active');
