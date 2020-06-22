@@ -132,7 +132,7 @@ module.exports = {
 
             query = `SELECT recipes.*, ${totalQuery}, chefs.name AS chef_name 
             FROM recipes
-            LEFT JOIN chefs ON (chefs.id = recies.chef_id)
+            LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
             ${filterQuery}
             LIMIT $1 OFFSET $2`;
 

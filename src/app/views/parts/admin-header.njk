@@ -12,7 +12,11 @@
             <a href="/admin/chefs">CHEFS</a>
         </div>
         <div class="admin-links">
+            {% if logedUser.is_admin %}
             <a href="/admin/users">USUÁRIOS</a>
+            {% else %}
+            <a href="/admin/users">PERFIL</a>
+            {% endif %}
         </div>
         <div class="exit admin-links">
             <form action="/admin/users/logout" method="POST">

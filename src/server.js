@@ -6,7 +6,18 @@ const session = require('./config/session');
 
 const server = express();
 
+const User = require('./app/models/User');
+
 server.use(session);
+server.use(async (req, res, next) => {
+    res.locals.session = req.session;
+
+    const user = await User.findOne({where: {id: req.session.userId}});
+
+    res.locals.logedUser = user;
+
+    next()
+});
 server.use(express.urlencoded({extended: true}));
 server.use(express.static('public'));
 server.use(methodOverride('_method'));
