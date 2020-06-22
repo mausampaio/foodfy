@@ -10,13 +10,21 @@ const User = require('./app/models/User');
 
 server.use(session);
 server.use(async (req, res, next) => {
-    res.locals.session = req.session;
+    try {
+        res.locals.session = req.session;
 
-    const user = await User.findOne({where: {id: req.session.userId}});
+        let id = 0;
 
-    res.locals.logedUser = user;
+        if (req.session.userId) id = req.session.userId;
 
-    next()
+        const user = await User.findOne({where: {id}});
+
+        res.locals.logedUser = user;
+
+        next()
+    } catch(err) {
+        console.error(err);
+    };
 });
 server.use(express.urlencoded({extended: true}));
 server.use(express.static('public'));

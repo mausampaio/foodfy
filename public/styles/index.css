@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     border: 0;
+    list-style-type: none;
 }
 
 body {
@@ -105,7 +106,7 @@ footer p {
     padding-bottom: 30px;
     margin: 0 230px;
     display: grid;
-    grid-template-columns: 183px 42px 62px 42px 1fr;
+    grid-template-columns: 183px 42px 62px 42px 1fr 160px;
     align-items: center;
     gap: 30px;
 }
@@ -127,20 +128,24 @@ footer p {
     text-decoration: none;
 }
 
+.links a:hover {
+    font-weight: bold;
+}
+
 .header .links .link-active {
     font-weight: bold;
 }
 
-.header form {
+.header .search {
     height: 37px;
     display: grid;
     grid-template-columns: 246px 91px;
     gap: 8px;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
-.header form input {
+.header .search input {
     height: 100%;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -148,12 +153,12 @@ footer p {
     box-sizing: border-box;
 }
 
-.header form input::placeholder {
+.header .search input::placeholder {
     font-size: 14px;
     color: #999999;
 }
 
-.header form button {
+.header .search button {
     height: 100%;
     padding: 8px 8px;
 }
