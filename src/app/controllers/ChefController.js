@@ -98,7 +98,7 @@ module.exports = {
 
         const data = await Promise.all(recipesPromise); 
 
-        return res.render("admin/chefs/show", {chef, recipes: data, avatar: avatarData});
+        return res.render("admin/chefs/show", {chef, recipes: data, avatar: avatarData, user: req.user});
     },
     async restrictedShow(req, res) {
         let results = await Chef.find(req.params.id);
@@ -155,7 +155,7 @@ module.exports = {
 
         const data = await Promise.all(recipesPromise); 
 
-        return res.render("admin/chefs/show", {chef, recipes: data, avatar: avatarData});
+        return res.render("admin/chefs/show", {chef, recipes: data, avatar: avatarData, user: req.user});
     },
     create(req, res) {
         return res.render("admin/chefs/create");
@@ -214,7 +214,7 @@ module.exports = {
             avatarData = null;
         };
 
-        return res.render("admin/chefs/edit", {chef, avatar: avatarData});
+        return res.render("admin/chefs/edit", {chef, avatar: avatarData, user: req.user});
     },
     async put(req, res) {
         const keys = Object.keys(req.body);

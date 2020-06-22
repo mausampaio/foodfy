@@ -38,9 +38,6 @@ async function adminRecipesEdit(req, res, next) {
         results = await Recipe.findByUserId(user.id);
         const recipes = results.rows;
 
-        console.log(recipes);
-        
-
         for (recipe of recipes) {
             if (req.params.id == recipe.id) {
                 return next();
@@ -49,9 +46,20 @@ async function adminRecipesEdit(req, res, next) {
 
         return res.redirect(`/admin/recipes`);
     }
+
+    next();
 };
 
-async function adminChefs(req, res, next) {
+async function adminChefsIndex(req, res, next) {
+    const results = await User.findById(req.session.userId);
+    const user = results.rows[0];
+
+    req.user = user;
+
+    next();
+};
+
+async function adminChefsShow(req, res, next) {
     const results = await User.findById(req.session.userId);
     const user = results.rows[0];
 
@@ -66,6 +74,8 @@ async function adminChefsEdit(req, res, next) {
     const results = await User.findById(req.session.userId);
     const user = results.rows[0];
 
+    req.user = user;
+
     const id = req.params.id;
 
     if (!user.is_admin) return res.redirect(`/admin/chefs/${id}`);
@@ -73,10 +83,23 @@ async function adminChefsEdit(req, res, next) {
     next();
 };
 
+async function adminChefsCreate(req, res, next) {
+    const results = await User.findById(req.session.userId);
+    const user = results.rows[0];
+
+    req.user = user;
+
+    if (!user.is_admin) return res.redirect(`/admin/chefs`);
+
+    next();
+};
+
 module.exports = {
     onlyAdmin,
     adminRecipes,
-    adminChefs,
     adminRecipesEdit,
-    adminChefsEdit
+    adminChefsShow,
+    adminChefsIndex,
+    adminChefsEdit,
+    adminChefsCreate
 };
