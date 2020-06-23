@@ -61,10 +61,14 @@ module.exports = {
 
             await User.update(id, data);
 
+            const results = await User.totalRecipes(id);
+            const totalRecipes = results.rows[0].total_recipes;
+
             return res.render("admin/user/edit", {
                 user: {
                     ...data,
-                    id: id
+                    id: id,
+                    total_recipes: totalRecipes
                 },
                 success: "Usuário atualizado com sucesso."
             });
