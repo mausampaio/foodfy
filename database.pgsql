@@ -30,6 +30,7 @@ CREATE TABLE "recipes" (
   "ingredients" text[],
   "preparation" text[],
   "information" text,
+  "page_accesses" int DEFAULT 0,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
 );

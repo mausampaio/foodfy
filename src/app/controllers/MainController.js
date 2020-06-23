@@ -130,6 +130,16 @@ module.exports = {
         let results = await Recipe.find(req.params.id);
         const recipe = results.rows[0];
 
+        if (recipe.page_accesses == null) {
+            recipe.page_accesses = 0;
+        };
+
+        recipe.page_accesses = recipe.page_accesses + 1;
+
+        await Recipe.updateAccess({id: recipe.id, page_accesses: recipe.page_accesses});
+
+        console.log(recipe.page_accesses);
+
         if (!recipe) return res.send("Recipe not found!");
     
         recipe.created_at = date(recipe.created_at).format;

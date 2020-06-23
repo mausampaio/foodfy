@@ -13,6 +13,8 @@ module.exports = {
             return db.query(`SELECT recipes.*, chefs.name as chef_name 
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+            WHERE recipes.page_accesses is not null
+            ORDER BY recipes.page_accesses DESC
             LIMIT 6`);
         }catch(err) {
             throw `Database Error! ${err}`;
@@ -104,6 +106,20 @@ module.exports = {
             data.ingredients,
             data.preparation,
             data.information,
+            data.id
+        ];
+
+        return db.query(query, values);
+    },
+    updateAccess(data) {
+        const query = `
+            UPDATE recipes SET
+                page_accesses=$1
+            WHERE id = $2
+        `;
+
+        const values = [
+            data.page_accesses,
             data.id
         ];
 
