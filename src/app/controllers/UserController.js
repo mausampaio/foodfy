@@ -45,6 +45,8 @@ module.exports = {
         try {
             let { id, name, email, is_admin } = req.body;
 
+            console.log(req.body.is_admin);
+
             if (is_admin != "true") {
                 is_admin = false;
             } else {
@@ -60,7 +62,10 @@ module.exports = {
             await User.update(id, data);
 
             return res.render("admin/user/edit", {
-                user: data,
+                user: {
+                    ...data,
+                    id: id
+                },
                 success: "Usuário atualizado com sucesso."
             });
         } catch(err) {

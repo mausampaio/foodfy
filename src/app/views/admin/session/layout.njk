@@ -7,7 +7,6 @@
     {%include "parts/styles.njk"%}
 </head>
 <body>
-    {%include "parts/messages.njk"%}
 
     {%include "parts/login-header.njk"%}
     
@@ -15,6 +14,8 @@
         {% block content %}
         {% endblock content %}
     </section>
+
+    {%include "parts/messages.njk"%}
 
     <script src="/js/scripts.js"></script>
 </body>

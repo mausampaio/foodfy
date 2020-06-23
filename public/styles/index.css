@@ -584,6 +584,7 @@ footer p {
     padding: 0 20px;
     font-size: 16px;
     box-sizing: border-box;
+    color: #111;
 }
 
 .item input,
@@ -597,8 +598,10 @@ footer p {
 .item textarea{
     width: 100%;
     height: 257px;
+    padding: 20px 20px;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
+    font-family: Roboto;
 }
 
 .fields .ingredient, .preparation {
