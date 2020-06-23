@@ -7,9 +7,6 @@
 {% block content %}
     {% include 'main/recipes/list.njk' %}
     
-
-    <div class="pagination" data-page={{pagination.page}} data-total={{pagination.total}} data-filter={{filter}}></div>
-
     <script>
         if ({{pagination.total}} == 0) {
             const cards = document.querySelector('.cards');

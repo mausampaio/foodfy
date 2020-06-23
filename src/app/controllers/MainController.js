@@ -80,8 +80,25 @@ module.exports = {
         };
     },
     async chefs(req, res) {
-        let results = await Chef.all();
+        let {page, limit} = req.query;
+    
+        page = page || 1;
+        limit = limit || 16;
+        let offset = limit * (page -1);
+
+        const params = {
+            page,
+            limit,
+            offset
+        };
+
+        let results = await Chef.paginate(params);
         const chefs = results.rows;
+
+        const pagination = {
+            total: Math.ceil(chefs[0].total / limit),
+            page
+        };
 
         async function getAvatar(fileId) {
             results = await Chef.avatar(fileId);
@@ -107,7 +124,7 @@ module.exports = {
 
         const data = await Promise.all(chefsPromise);
 
-        return res.render("main/chefs/chefs", {chefs: data});
+        return res.render("main/chefs/chefs", {chefs: data, pagination});
     },
     async recipe(req, res) {
         let results = await Recipe.find(req.params.id);
