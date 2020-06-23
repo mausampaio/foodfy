@@ -67,6 +67,7 @@ module.exports = {
             const totalQuery = `(SELECT count(*) FROM users) AS total`;
 
             const query = `SELECT *, ${totalQuery} FROM users
+            ORDER BY users.name
             LIMIT $1 OFFSET $2`;
 
             return db.query(query, [limit, offset]);
