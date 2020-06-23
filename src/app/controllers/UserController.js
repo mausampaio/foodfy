@@ -15,15 +15,32 @@ module.exports = {
             offset
         };
 
-        const results = await User.paginate(params);
+        let results = await User.paginate(params);
         const users = results.rows;
+
+        async function getTotalRecipes(userId) {
+            results = await User.totalRecipes(userId);
+            const totalRecipes = results.rows[0].total_recipes;
+
+            return totalRecipes;
+        };
+
+        const usersPromise = users.map(async user => {
+            user.total_recipes = await getTotalRecipes(user.id);
+
+            return user;
+        });
+
+        const data = await Promise.all(usersPromise);
+
+        console.log(data)
 
         const pagination = {
             total: Math.ceil(users[0].total / limit),
             page
         };
 
-        return res.render("admin/user/list", {users, pagination});
+        return res.render("admin/user/list", {users: data, pagination});
     },
     create(req, res) {
         return res.render("admin/user/create");

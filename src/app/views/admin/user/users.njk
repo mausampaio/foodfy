@@ -10,22 +10,33 @@
                 </div>
                 <div class="action">
                     <a href="/admin/users/{{user.id}}/edit">Editar</a>
-                    <form id="form-delete" method="POST" action="/admin/users?_method=DELETE">
+                    <form id="form-delete-{{user.id}}" method="POST" action="/admin/users?_method=DELETE">
                         <input type="hidden" name="id" value="{{user.id}}">
                         <button type="submit" class="user-delete">Remover</button>
                     </form>
                 </div>
             </div>
         </div>
-    {% endfor %}
 
     <script>
-        const formDelete = document.querySelector("#form-delete");
-        formDelete.addEventListener("submit", function(event){
+        const formDelete{{user.id}} = document.querySelector("#form-delete-{{user.id}}");
+        formDelete{{user.id}}.addEventListener("submit", function(event){
             const confirmation = confirm("Tem certeza que deseja deletar? Essa operação não tem retorno!");
             if (!confirmation) {
                 event.preventDefault();
+            } else {
+                if ({{user.total_recipes}} != 0) {
+                    alert('Usuários que possuem receitas não podem ser deletados!')
+                    event.preventDefault();
+                } else {
+                    if ({{session.userId}} == {{user.id}}) {
+                        alert('Não é possível deletar seu próprio usuário!')
+                        event.preventDefault();
+                    };
+                };
             };
         });
     </script>
+
+    {% endfor %}
 </section>
