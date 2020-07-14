@@ -604,8 +604,29 @@ footer p {
     font-family: Roboto;
 }
 
+.fields .first,
+.fields .field-container {
+    display: flex;
+    align-items: center;
+}
+
+.fields .field-container {
+    padding-top: 10px;
+}
+
 .fields .ingredient, .preparation {
     padding-top: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.fields .preparation i,
+.fields .first i,
+.fields .field-container i {
+    padding-left: 10px;
+    cursor: pointer;
+    color: red;
 }
 
 .fields .ingredient:first-child, .preparation:first-child {

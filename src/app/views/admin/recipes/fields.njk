@@ -44,24 +44,30 @@
         <div class="title">Ingredientes</div>
             <div id="ingredients">
                 {% for ingredient in recipe.ingredients %}
-                    <div class="ingredient">
-                        <input type="text" name="ingredients[]" value="{{ingredient}}">
+                    <div class="field-container">
+                        <div class="ingredient">
+                            <input type="text" name="ingredients[]" value="{{ingredient}}">
+                        </div>
+                        <i class="material-icons" onclick="RecipeItems.removeIngredient(event)">delete</i>
                     </div>
                 {% endfor %}
             </div>
-        <button type="button" class="add-ingredient">Adicionar novo ingrediente</button>
+        <button type="button" class="add-ingredient" onclick="RecipeItems.addIngredient()">Adicionar novo ingrediente</button>
     </div>
 
     <div class="item">
         <div class="title">Modo de preparo</div>
             <div id="preparations">
                 {% for preparation in recipe.preparation %}
-                    <div class="preparation">
-                        <input type="text" name="preparation[]" value="{{preparation}}">
+                    <div class="field-container">
+                        <div class="preparation">
+                            <input type="text" name="preparation[]" value="{{preparation}}">
+                        </div>
+                        <i class="material-icons" onclick="RecipeItems.removePreparation(event)">delete</i>
                     </div>
                 {% endfor %}
             </div>
-        <button type="button" class="add-preparation">Adicionar novo passo</button>
+        <button type="button" class="add-preparation" onclick="RecipeItems.addPreparation()">Adicionar novo passo</button>
     </div>
 
     <div class="item">

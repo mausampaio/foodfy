@@ -57,15 +57,6 @@ if (toggleInfo != null) {
     });
 };
 
-if (ingredient != null) {
-    ingredient.addEventListener("click", addIngredient);
-};
-
-if (preparation != null) {
-    preparation.addEventListener("click", addPreparation);
-};
-
-
 function hide(id, toggle) {
     const element = document.getElementById(id);
 
@@ -78,35 +69,61 @@ function hide(id, toggle) {
     };
 };
 
-function addIngredient() {
-    const ingredients = document.querySelector("#ingredients");
-    const fieldContainer = document.querySelectorAll(".ingredient");
-  
-    // Realiza um clone do último ingrediente adicionado
-    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
-  
-    // Não adiciona um novo input se o último tem um valor vazio
-    if (newField.children[0].value == "") return false;
-  
-    // Deixa o valor do input vazio
-    newField.children[0].value = "";
-    ingredients.appendChild(newField);
-}
+const RecipeItems = {
+    cloneFields(fields, fieldContainer) {
+        const div = document.createElement('div');
+        div.classList.add("field-container");
 
-function addPreparation() {
-    const preparations = document.querySelector("#preparations");
-    const fieldContainer = document.querySelectorAll(".preparation");
-  
-    // Realiza um clone do último ingrediente adicionado
-    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
-  
-    // Não adiciona um novo input se o último tem um valor vazio
-    if (newField.children[0].value == "") return false;
-  
-    // Deixa o valor do input vazio
-    newField.children[0].value = "";
-    preparations.appendChild(newField);
-}
+        // Realiza um clone do último ingrediente adicionado
+        const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+      
+        // Não adiciona um novo input se o último tem um valor vazio
+        if (fieldContainer[fieldContainer.length - 1].children[0].value == "") return false;
+        console.log(fieldContainer)
+      
+        // Deixa o valor do input vazio
+        newField.children[0].value = "";
+
+        fields.appendChild(div);
+        div.appendChild(newField);
+        div.appendChild(RecipeItems.getRemoveButton());
+    },
+    addIngredient() {
+        const fields = document.querySelector("#ingredients");
+        const fieldContainer = document.querySelectorAll(".field-container .ingredient");
+      
+        RecipeItems.cloneFields(fields, fieldContainer);
+    },
+    addPreparation() {
+        const fields = document.querySelector("#preparations");
+        const fieldContainer = document.querySelectorAll(".field-container .preparation");
+
+        RecipeItems.cloneFields(fields, fieldContainer);    
+    },
+    getRemoveButton() {
+        const button = document.createElement('i');
+        button.classList.add('material-icons');
+        button.innerHTML = "delete";
+        button.onclick = RecipeItems.removeField;
+        return button;
+    },
+    removeIngredient(event) {
+        const fieldContainer = document.querySelectorAll(".field-container .ingredient");
+        const itemDiv = event.target.parentNode;
+
+        if (fieldContainer.length == 1) return false;
+        
+        itemDiv.remove();
+    },
+    removePreparation(event) {
+        const fieldContainer = document.querySelectorAll(".field-container .preparation");
+        const itemDiv = event.target.parentNode;
+
+        if (fieldContainer.length == 1) return false;
+        
+        itemDiv.remove();
+    }
+};
   
 function paginate(selectedPage, totalPages) {
     let pages = [],
