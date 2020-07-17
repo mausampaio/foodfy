@@ -163,5 +163,19 @@
         "path": "public/images/julia_almeida.jpg"
       }
     }
+  ],
+  "users": [
+    {
+      "name": "Admin",
+      "email": "admin@foodfy.com",
+      "password": "admin",
+      "is_admin": true
+    },
+    {
+      "name": "Operator",
+      "email": "operator@foodfy.com",
+      "password": "operator",
+      "is_admin": false
+    }
   ]
 }
