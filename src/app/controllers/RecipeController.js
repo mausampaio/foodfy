@@ -20,10 +20,19 @@ module.exports = {
         let results = await Recipe.paginate(params);
         const recipes = results.rows;
 
-        const pagination = {
-            total: Math.ceil(recipes[0].total / limit),
-            page
-        };
+        let pagination = {};
+
+        if (Array.isArray(recipes) && recipes.length) {
+            pagination = {
+                total: Math.ceil(recipes[0].total / limit),
+                page
+            };
+        } else {
+            pagination = {
+                total: 0,
+                page
+            };
+        }
 
         if (!recipes) return res.send('Recipes not found!');
 
