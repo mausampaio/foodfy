@@ -61,6 +61,32 @@ module.exports = {
             console.error(err);
         };
     },
+    async seedCreate(data) {
+        try {
+            const query = `
+                INSERT INTO users (
+                    name,
+                    email,
+                    password,
+                    is_admin
+                ) VALUES ($1, $2, $3, $4)
+                RETURNING id
+            `;
+
+            const values = [
+                data.name,
+                data.email,
+                data.password,
+                data.is_admin
+            ];
+
+            const results = await db.query(query, values);
+
+            return results.rows[0].id;
+        } catch(err) {
+            console.error(err);
+        };
+    },
     paginate(params) {
         try {
             const {limit, offset} = params;
