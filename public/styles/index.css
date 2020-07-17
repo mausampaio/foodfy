@@ -626,7 +626,7 @@ footer p {
 .fields .field-container i {
     padding-left: 10px;
     cursor: pointer;
-    color: red;
+    color: #DC4747;
 }
 
 .fields .ingredient:first-child, .preparation:first-child {
@@ -722,7 +722,7 @@ form .item #photos-preview img {
     top: 0;
     left: 0;
     background: rgba(255, 255, 255, 0.8);
-    color: red;
+    color: #DC4747;
     width: 100%;
     height: 100%;
     display: flex;
