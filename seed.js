@@ -45,7 +45,7 @@ async function createUsers() {
             is_admin: user.is_admin
         };
 
-        const userId = await User.seedCreate(params);
+        const userId = await User.Create(params);
         usersIds.push(userId);
     };
 };

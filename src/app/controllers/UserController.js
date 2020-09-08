@@ -1,5 +1,6 @@
 const User = require('../models/User');
-const { put } = require('../../routes/users');
+const { hash } = require('bcryptjs');
+const mailer = require('../../lib/mailer');
 
 module.exports = {
     async list(req, res) {
@@ -33,8 +34,6 @@ module.exports = {
 
         const data = await Promise.all(usersPromise);
 
-        console.log(data)
-
         const pagination = {
             total: Math.ceil(users[0].total / limit),
             page
@@ -46,7 +45,44 @@ module.exports = {
         return res.render("admin/user/create");
     },
     async post(req, res) {
-        await User.create(req.body);
+        const randomstring = Math.random().toString(36).slice(-8);
+            
+        const passwordHash = await hash(randomstring, 8);
+
+        let isAdmin = false;
+
+        if (req.body.is_admin != "true") {
+            isAdmin = false;
+        } else {
+            isAdmin = true;
+        };
+
+        const data = {
+            name: req.body.name,
+            email: req.body.email,
+            password: passwordHash,
+            is_admin: isAdmin
+        };
+
+        await User.create(data);
+
+        await mailer.sendMail({
+            to: data.email,
+            from: 'no-reply@foodfy.com.br',
+            subject: 'Bem-vindo ao Foodfy!',
+            html: `
+                <h2>Parabéns! O seu cadastro no Foodfy foi realizado com sucesso!</h2>
+                <p>Para realizar o acesso ao sistema basta utilizar os dados abaixo:</p>
+                <ul>
+                    <li>
+                        Usuário: ${data.email}
+                    </li>
+                    <li>
+                        Senha: ${randomstring}
+                    </li>
+                </ul>
+            `
+        });
 
         return res.redirect('/admin/users');
     },
