@@ -5,8 +5,7 @@ const ChefController = require('../../../app/controllers/ChefController');
 const ProfileController = require('../../../app/controllers/ProfileController');
 
 async function onlyAdmin(req, res, next) {
-    const results = await User.findById(req.session.userId);
-    const user = results.rows[0];
+    const user = await User.findOne({where: {id: req.session.userId}});
 
     req.user = user;
 
@@ -16,8 +15,7 @@ async function onlyAdmin(req, res, next) {
 };
 
 async function adminRecipes(req, res, next) {
-    const results = await User.findById(req.session.userId);
-    const user = results.rows[0];
+    const user = await User.findOne({where: {id: req.session.userId}});
 
     req.user = user;
 
@@ -27,15 +25,14 @@ async function adminRecipes(req, res, next) {
 };
 
 async function adminRecipesEdit(req, res, next) {
-    let results = await User.findById(req.session.userId);
-    const user = results.rows[0];
+    const user = await User.findOne({where: {id: req.session.userId}});
 
     const id = req.params.id;
 
     console.log(id);
     
     if (!user.is_admin) {
-        results = await Recipe.findByUserId(user.id);
+        const results = await Recipe.findByUserId(user.id);
         const recipes = results.rows;
 
         for (recipe of recipes) {
@@ -51,8 +48,7 @@ async function adminRecipesEdit(req, res, next) {
 };
 
 async function adminChefsIndex(req, res, next) {
-    const results = await User.findById(req.session.userId);
-    const user = results.rows[0];
+    const user = await User.findOne({where: {id: req.session.userId}});
 
     req.user = user;
 
@@ -60,8 +56,7 @@ async function adminChefsIndex(req, res, next) {
 };
 
 async function adminChefsShow(req, res, next) {
-    const results = await User.findById(req.session.userId);
-    const user = results.rows[0];
+    const user = await User.findOne({where: {id: req.session.userId}});
 
     req.user = user;
 
@@ -71,8 +66,7 @@ async function adminChefsShow(req, res, next) {
 };
 
 async function adminChefsEdit(req, res, next) {
-    const results = await User.findById(req.session.userId);
-    const user = results.rows[0];
+    const user = await User.findOne({where: {id: req.session.userId}});
 
     req.user = user;
 
@@ -84,8 +78,7 @@ async function adminChefsEdit(req, res, next) {
 };
 
 async function adminChefsCreate(req, res, next) {
-    const results = await User.findById(req.session.userId);
-    const user = results.rows[0];
+    const user = await User.findOne({where: {id: req.session.userId}});
 
     req.user = user;
 
