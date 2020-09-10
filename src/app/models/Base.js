@@ -61,7 +61,7 @@ const Base = {
       let update = [];
 
       Object.keys(data).map(key => {
-          const line = `${key} = '${data[key]}`;
+          const line = `${key} = '${data[key]}'`;
           update.push(line);
       });
 

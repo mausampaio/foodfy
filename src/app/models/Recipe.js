@@ -1,7 +1,11 @@
 const {date} = require('../../lib/utils');
 const db = require('../../config/db')
+const Base = require('./Base');
+
+Base.init({ table: 'recipes' });
 
 module.exports = {
+    ...Base,
     all() {
         return db.query(`SELECT recipes.*, chefs.name as chef_name 
         FROM recipes
@@ -163,5 +167,18 @@ module.exports = {
         FROM files
         LEFT JOIN recipe_files ON (recipe_files.file_id = files.id)
         WHERE recipe_id = $1`, [id]);
+    },
+    async totalRecipesByChef(id) {
+        try {
+            const results = await db.query(`
+                SELECT count(recipes) AS total_recipes
+                FROM recipes
+                WHERE recipes.chef_id = ${id}
+            `);
+
+            return results.rows[0].total_recipes;
+        } catch (error) {
+            console.error(error);
+        }
     }
 };

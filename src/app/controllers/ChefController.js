@@ -26,8 +26,7 @@ module.exports = {
         };
 
         async function getAvatar(fileId) {
-            results = await Chef.avatar(fileId);
-            const avatar = results.rows[0];
+            const avatar = await File.findOne({where: {id: fileId}});
         
             const avatarData = {
                 ...avatar,
@@ -52,15 +51,15 @@ module.exports = {
         return res.render("admin/chefs/index", {chefs: data, pagination, user: req.user});
     },
     async show(req, res) {
-        let results = await Chef.find(req.params.id);
-        const chef = results.rows[0];
+        const chef = await Chef.findOne({where: {id: req.params.id}});
+
+        chef.total_recipes = await Recipe.totalRecipesByChef(req.params.id);
 
         if (!chef) return res.send("Chef not found!");
 
         chef.created_at = date(chef.created_at).format;
 
-        results = await Chef.avatar(chef.file_id);
-        const avatar = results.rows[0];
+        const avatar = await File.findOne({where: {id: chef.file_id}});
 
         let avatarData = {};
 
@@ -76,7 +75,7 @@ module.exports = {
         };
         
 
-        results = await Chef.findRecipes(req.params.id);
+        results = await Recipe.findByChef(req.params.id);
         const recipes = results.rows;
 
         async function getFiles(recipeId) {
@@ -101,8 +100,7 @@ module.exports = {
         return res.render("admin/chefs/show", {chef, recipes: data, avatar: avatarData, user: req.user});
     },
     async restrictedShow(req, res) {
-        let results = await Chef.find(req.params.id);
-        const chef = results.rows[0];
+        const chef = await Chef.findOne({where: {id: req.params.id}});
 
         results = await Chef.findByUser(req.params.id, req.user.id);
         
@@ -116,8 +114,7 @@ module.exports = {
 
         chef.created_at = date(chef.created_at).format;
 
-        results = await Chef.avatar(chef.file_id);
-        const avatar = results.rows[0];
+        const avatar = await File.findOne({where: {id: chef.file_id}});
 
         let avatarData = {};
 
@@ -185,21 +182,18 @@ module.exports = {
             file_id: fileId
         }
 
-        const results = await Chef.create(data);
-        const chefId = results.rows[0].id;
+        const chefId = await Chef.create(data);
         
         return res.redirect(`/admin/chefs/${chefId}`);
     },
     async edit(req, res) {
-        let results = await Chef.find(req.params.id);
-        const chef = results.rows[0];
+        const chef = await Chef.findOne({where: {id: req.params.id}});
 
         if (!chef) return res.send("Chef not found!");
     
         chef.created_at = date(chef.created_at).format;
 
-        results = await Chef.avatar(chef.file_id);
-        const avatar = results.rows[0];
+        const avatar = await File.findOne({where: {id: chef.file_id}});
 
         let avatarData = {};
 
@@ -217,6 +211,7 @@ module.exports = {
         return res.render("admin/chefs/edit", {chef, avatar: avatarData, user: req.user});
     },
     async put(req, res) {
+        const { id, name } = req.body;
         const keys = Object.keys(req.body);
     
         for (key of keys) {
@@ -246,14 +241,16 @@ module.exports = {
             await File.delete(removedFiles);
         };
 
+
         const data = {
-            ...req.body,
-            file_id: fileId
+            name
         }
 
-        await Chef.update(data);
+        if (fileId != 0 ) data.file_id = fileId;
+
+        await Chef.update(id, data);
         
-        return res.redirect(`chefs/${req.body.id}`);
+        return res.redirect(`chefs/${id}`);
     },
     async delete(req, res) {
         const results = await Chef.find(req.body.id);
