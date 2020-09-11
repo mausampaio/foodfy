@@ -1,4 +1,5 @@
 const {date} = require("../../lib/utils"); 
+const fs = require('fs');
 const Recipe = require("../models/Recipe");
 const File = require("../models/File");
 const Recipe_Files = require("../models/Recipe_Files");
@@ -239,6 +240,8 @@ module.exports = {
         await Recipe_Files.deleteByRecipe(recipe.id);
 
         for (file of files) {
+            fs.unlinkSync(file.path);
+
             await File.delete(file.id);
         };
 

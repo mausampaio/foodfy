@@ -1,6 +1,7 @@
 const {date} = require("../../lib/utils"); 
 const Recipe = require("../models/Recipe");
 const Chef = require("../models/Chef");
+const File = require("../models/File");
 
 module.exports = {
     async index(req, res) {
@@ -101,8 +102,7 @@ module.exports = {
         };
 
         async function getAvatar(fileId) {
-            results = await Chef.avatar(fileId);
-            const avatar = results.rows[0];
+            const avatar = await File.findOne({where: {id: fileId}});
         
             const avatarData = {
                 ...avatar,
@@ -153,15 +153,15 @@ module.exports = {
         return res.render("main/recipes/show", {recipe, files});
     },
     async chef(req, res) {
-        let results = await Chef.find(req.params.id);
-        const chef = results.rows[0];
+        const chef = await Chef.findOne({where: {id: req.params.id}});
+
+        chef.total_recipes = await Recipe.totalRecipesByChef(req.params.id);
 
         if (!chef) return res.send("Chef not found!");
     
         chef.created_at = date(chef.created_at).format;
 
-        results = await Chef.avatar(chef.file_id);
-        const avatar = results.rows[0];
+        const avatar = await File.findOne({where: {id: chef.file_id}});
 
         let avatarData = {};
 
