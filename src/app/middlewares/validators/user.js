@@ -26,14 +26,9 @@ async function adminRecipes(req, res, next) {
 
 async function adminRecipesEdit(req, res, next) {
     const user = await User.findOne({where: {id: req.session.userId}});
-
-    const id = req.params.id;
-
-    console.log(id);
     
     if (!user.is_admin) {
-        const results = await Recipe.findByUserId(user.id);
-        const recipes = results.rows;
+        const recipes = await Recipe.findAll({where: {user_id: user.id}});
 
         for (recipe of recipes) {
             if (req.params.id == recipe.id) {

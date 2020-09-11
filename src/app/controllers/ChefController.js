@@ -84,13 +84,12 @@ module.exports = {
         };
         
 
-        results = await Recipe.findByChef(req.params.id);
-        const recipes = results.rows;
+        const recipes = await Recipe.findAll({where: {chef_id: req.params.id}});
 
         async function getFiles(recipeId) {
             
-            results = await Recipe.files(recipeId);
-            const files = results.rows.map(file => ({
+            let files = await Recipe.files(recipeId);
+            files = files.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
@@ -144,8 +143,8 @@ module.exports = {
 
         async function getFiles(recipeId) {
             
-            results = await Recipe.files(recipeId);
-            const files = results.rows.map(file => ({
+            let files = await Recipe.files(recipeId);
+            files = files.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
@@ -259,12 +258,9 @@ module.exports = {
 
             if (req.body.removed_files) {
                 const removedFiles = req.body.removed_files;
-
-                console.log(removedFiles);
                 
                 await File.delete(removedFiles);
             };
-
 
             const data = {
                 name

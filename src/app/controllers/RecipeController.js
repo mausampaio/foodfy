@@ -1,6 +1,7 @@
 const {date} = require("../../lib/utils"); 
 const fs = require('fs');
 const Recipe = require("../models/Recipe");
+const Chef = require("../models/Chef");
 const File = require("../models/File");
 const Recipe_Files = require("../models/Recipe_Files");
 
@@ -18,11 +19,12 @@ module.exports = {
             offset
         };
 
-        let results = await Recipe.paginate(params);
-        const recipes = results.rows;
+        const recipes = await Recipe.paginate(params);
 
         const pagination = {
-            total: Array.isArray(recipes) && recipes.length ? Math.ceil(recipes[0].total / limit) : 0,
+            total: Array.isArray(recipes) && recipes.length 
+                ? Math.ceil(recipes[0].total / limit) 
+                : 0,
             page
         };
 
@@ -30,8 +32,8 @@ module.exports = {
 
         async function getFiles(recipeId) {
             
-            results = await Recipe.files(recipeId);
-            const files = results.rows.map(file => ({
+            let files = await Recipe.files(recipeId);
+            files = files.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
@@ -39,7 +41,7 @@ module.exports = {
             return files[0];
         }
 
-        const recipesPromise = results.rows.map(async recipe => {
+        const recipesPromise = recipes.map(async recipe => {
             recipe.files = await getFiles(recipe.id);
 
             return recipe;
@@ -63,32 +65,20 @@ module.exports = {
             userId: req.session.userId
         };
 
-        let results = await Recipe.findByUser(params);
-        const recipes = results.rows;
+        const recipes = await Recipe.findByUser(params);
 
-        let pagination = {};
-
-        if (Array.isArray(recipes) && recipes.length) {
-            pagination = {
-                total: Math.ceil(recipes[0].total / limit),
-                page
-            };
-        } else {
-            pagination = {
-                total: 0,
-                page
-            };
-        }
-
-        console.log(pagination);
-        
+        const pagination = {
+            total: Array.isArray(recipes) && recipes.length 
+                ? Math.ceil(recipes[0].total / limit)
+                : 0,
+            page
+        };
         
         if (!recipes) return res.send('Recipes not found!');
 
-        async function getFiles(recipeId) {
-            
-            results = await Recipe.files(recipeId);
-            const files = results.rows.map(file => ({
+        async function getFiles(recipeId) {  
+            let files = await Recipe.files(recipeId);
+            files = files.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
@@ -96,7 +86,7 @@ module.exports = {
             return files[0];
         }
 
-        const recipesPromise = results.rows.map(async recipe => {
+        const recipesPromise = recipes.map(async recipe => {
             recipe.files = await getFiles(recipe.id);
 
             return recipe;
@@ -107,15 +97,18 @@ module.exports = {
         return res.render("admin/recipes/index", {recipes: data, pagination});
     },
     async show(req, res) {
-        let results = await Recipe.find(req.params.id);
-        const recipe = results.rows[0];
+        const recipe = await Recipe.findOne({where: {id: req.params.id}});
+
+        const chef = await Chef.findOne({where: {id: recipe.chef_id}});
+
+        recipe.chef_name = chef.name;
 
         if (!recipe) return res.send("Recipe not found!");
 
         recipe.created_at = date(recipe.created_at).format;
 
-        results = await Recipe.files(recipe.id);
-        const files = results.rows.map(file => ({
+        let files = await Recipe.files(recipe.id);
+        files = files.map(file => ({
             ...file,
             src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
         }));
@@ -123,8 +116,7 @@ module.exports = {
         return res.render("admin/recipes/show", {recipe, files});
     },
     async create(req, res) {
-        let results = await Recipe.chefSelectOptions();
-        const options = results.rows;
+        const options = await Chef.findAll();
 
         const recipe = {
             ingredients: [""],
@@ -149,12 +141,10 @@ module.exports = {
             user_id: req.session.userId
         };
 
-        let results = await Recipe.create(data);
-        const recipeId = results.rows[0].id;
+        const recipeId = await Recipe.create(data);
 
         const filesPromise = req.files.map(async file => {
-            results = await File.create({...file});
-            const fileId = results.rows[0].id; 
+            const fileId = await File.create({...file});
 
             await Recipe_Files.create({recipe_id: recipeId, file_id: fileId});
 
@@ -166,8 +156,7 @@ module.exports = {
         return res.redirect(`/admin/recipes/${recipeId}`);
     },
     async edit(req, res) {
-        let results = await Recipe.find(req.params.id);
-        const recipe = results.rows[0];
+        const recipe = await Recipe.findOne({where: {id: req.params.id}});
 
         if (!recipe) return res.send("Recipe not found!");
     
@@ -175,11 +164,10 @@ module.exports = {
         recipe.ingredients = recipe.ingredients || [""];
         recipe.preparation = recipe.preparation || [""];
 
-        results = await Recipe.chefSelectOptions();
-        const options = results.rows;
+        const options = await Chef.findAll();
         
-        results = await Recipe.files(recipe.id);
-        const files = results.rows.map(file => ({
+        let files = await Recipe.files(recipe.id);
+        files = files.map(file => ({
             ...file,
             src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
         }));
@@ -187,6 +175,7 @@ module.exports = {
         return res.render("admin/recipes/edit", {recipe, chefOptions: options, files});
     },
     async put(req, res) {
+        const { chef, title, ingredients, preparation, information, id, removed_files } = req.body;
         const keys = Object.keys(req.body);
     
         for (key of keys) {
@@ -199,8 +188,14 @@ module.exports = {
 
         if (req.files.length != 0) {
             const newFilesPromise = req.files.map(async file => {
-                results = await File.create({...file});
-                const fileId = results.rows[0].id;
+                const { filename, path } = file;
+
+                const data = {
+                    name: filename,
+                    path
+                };
+
+                fileId = await File.create(data);
 
                 await Recipe_Files.create({recipe_id: recipeId, file_id: fileId});
     
@@ -210,8 +205,8 @@ module.exports = {
             await Promise.all(newFilesPromise);
         };
 
-        if (req.body.removed_files) {
-            const removedFiles = req.body.removed_files.split(",");
+        if (removed_files) {
+            const removedFiles = removed_files.split(",");
             const lastIndex = removedFiles.length -1;
             removedFiles.splice(lastIndex, 1);
 
@@ -226,16 +221,22 @@ module.exports = {
             await Promise.all(removedFilesPromise);
         };
 
-        await Recipe.update(req.body);
+        const recipeData = {
+            chef,
+            title,
+            ingredients,
+            preparation,
+            information
+        }
 
-        return res.redirect(`recipes/${req.body.id}`);
+        await Recipe.update(id, recipeData);
+
+        return res.redirect(`recipes/${id}`);
     },
     async delete(req, res) {
-        let results = await Recipe.find(req.body.id);
-        const recipe = results.rows[0];
+        const recipe = await Recipe.findOne({where: {id: req.params.id}});
 
-        results = await Recipe.files(recipe.id);
-        const files = results.rows;
+        const files = await Recipe.files(recipe.id);
 
         await Recipe_Files.deleteByRecipe(recipe.id);
 
