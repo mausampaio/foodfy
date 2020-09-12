@@ -62,13 +62,12 @@ module.exports = {
         let offset = limit * (page -1);
 
         const params = {
-            page,
             limit,
             offset,
-            userId: req.session.userId
+            filters: {where: {user_id: req.session.userId}}
         };
 
-        const recipes = await Recipe.findByUser(params);
+        const recipes = await Recipe.paginate(params);
 
         const pagination = {
             total: Array.isArray(recipes) && recipes.length 
@@ -90,6 +89,10 @@ module.exports = {
         }
 
         const recipesPromise = recipes.map(async recipe => {
+            const chef = await Chef.findOne({where: {id: recipe.chef_id}});
+
+            recipe.chef_name = chef.name;
+
             recipe.files = await getFiles(recipe.id);
 
             return recipe;

@@ -19,27 +19,6 @@ module.exports = {
             throw `Database Error! ${err}`;
         };
     },
-    async findByUser(params) {
-        try {
-            const { limit, offset, userId } = params;
-
-            const totalQuery = `(SELECT count(*) FROM recipes
-            LEFT JOIN users ON (recipes.user_id = users.id) 
-            WHERE user_id = ${userId}
-            ) AS total`
-            
-            const results = await db.query(`SELECT recipes.*, ${totalQuery},chefs.name as chef_name 
-            FROM recipes
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-            LEFT JOIN users ON (recipes.user_id = users.id) 
-            WHERE user_id = $1
-            LIMIT $2 OFFSET $3`, [userId, limit, offset]);
-
-            return results.rows;
-        }catch(err) {
-            throw `Database Error! ${err}`;
-        };
-    },
     async files(id) {
         const results = await db.query(`SELECT files.*
         FROM files

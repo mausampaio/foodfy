@@ -35,25 +35,38 @@ const Base = {
     return results.rows;
   },
   async paginate(params) {
-    const {filters, limit, offset} = params;
+    const {searchs, filters, limit, offset} = params;
 
     let totalQuery = `(SELECT count(*) FROM ${this.table}`,
     query = `SELECT ${this.table}.*`,
+    search = ``;
     filter = ``;
 
   
+    if (searchs) {
+      Object.keys(searchs).map(key => {
+          search += ` ${key}`;
+    
+          Object.keys(searchs[key]).map(field => {
+              search += ` ${field} ILIKE '%${searchs[key][field]}%'`;
+          });
+      });
+    }
+
     if (filters) {
       Object.keys(filters).map(key => {
           filter += ` ${key}`;
     
           Object.keys(filters[key]).map(field => {
-              filter += ` ${field} ILIKE '%${filters[key][field]}%'`;
+              filter += ` ${field} = '${filters[key][field]}'`;
           });
       });
     }
 
-    totalQuery += `${filter}) AS total`;
-    query += `, ${totalQuery} FROM ${this.table} ${filter} ORDER BY ${this.table}.updated_at DESC LIMIT ${limit} OFFSET ${offset}`;
+    totalQuery += `${search} ${filter}) AS total`;
+    query += `, ${totalQuery} FROM ${this.table} ${search} ${filter} ORDER BY ${this.table}.updated_at DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    console.log(query)
 
     const results = await db.query(query);
   

@@ -42,7 +42,9 @@ module.exports = {
             offset
         };
 
-        if (filter) params.filters = {where: {'recipes.title': filter}};
+        if (filter) {
+            params.searchs = {where: {'recipes.title': filter}};
+        }
 
         const recipes = await Recipe.paginate(params);
 
