@@ -98,6 +98,10 @@ module.exports = {
         }
 
         const recipesPromise = recipes.map(async recipe => {
+            const chef = await Chef.findOne({where: {id: recipe.chef_id}});
+
+            recipe.chef_name = chef.name;
+
             recipe.files = await getFiles(recipe.id);
 
             return recipe;
