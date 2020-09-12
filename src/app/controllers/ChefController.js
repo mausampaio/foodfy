@@ -114,13 +114,7 @@ module.exports = {
     async restrictedShow(req, res) {
         const chef = await Chef.findOne({where: {id: req.params.id}});
 
-        results = await Chef.findByUser(req.params.id, req.user.id);
-        
-        if (results.rows[0] == undefined) {
-            chef.total_recipes = 0;
-        } else {
-            chef.total_recipes = results.rows[0].total_recipes;
-        };
+        chef.total_recipes = await Recipe.totalRecipesBy({where: {chef_id: chef.id}, and: {user_id: req.user.id}});
 
         if (!chef) return res.send("Chef not found!");
 
@@ -142,8 +136,7 @@ module.exports = {
         };
         
 
-        results = await Chef.findRecipesByUser(req.user.id, req.params.id);
-        const recipes = results.rows;
+        const recipes = await Recipe.findAll({where: {chef_id: chef.id}, and: {user_id: req.user.id}});
 
         async function getFiles(recipeId) {
             
