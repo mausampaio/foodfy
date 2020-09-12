@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Recipe = require('../models/Recipe');
 const { hash } = require('bcryptjs');
 const mailer = require('../../lib/mailer');
 
@@ -85,12 +86,9 @@ module.exports = {
         return res.redirect('/admin/users');
     },
     async edit(req, res) {
-        const id = req.params.id;
+        req.user.total_recipes = await Recipe.totalRecipesBy({where: {user_id: req.user.id}});
 
-        const results = await User.totalRecipes(id);
-        const user = results.rows[0];
-
-        return res.render("admin/user/edit", {user});
+        return res.render("admin/user/edit", {user: req.user});
     },
     async put(req, res) {
         try {

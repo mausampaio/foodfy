@@ -50,7 +50,7 @@ module.exports = {
                 chef.avatar = {src: "http://placehold.it/200x200?text=CHEF SEM FOTO"};
             };
 
-            chef.total_recipes = await Recipe.totalRecipesByChef(chef.id);
+            chef.total_recipes = await Recipe.totalRecipesBy({where: {chef_id: chef.id}});
             
             return chef;
         })
@@ -62,7 +62,7 @@ module.exports = {
     async show(req, res) {
         const chef = await Chef.findOne({where: {id: req.params.id}});
 
-        chef.total_recipes = await Recipe.totalRecipesByChef(req.params.id);
+        chef.total_recipes = await Recipe.totalRecipesBy({where: {chef_id: chef.id}});
 
         if (!chef) return res.send("Chef not found!");
 
@@ -203,7 +203,7 @@ module.exports = {
     async edit(req, res) {
         const chef = await Chef.findOne({where: {id: req.params.id}});
 
-        chef.total_recipes = await Recipe.totalRecipesByChef(req.params.id);
+        chef.total_recipes = await Recipe.totalRecipesBy({where: {chef_id: chef.id}});
 
         if (!chef) return res.send("Chef not found!");
     

@@ -48,13 +48,19 @@ module.exports = {
 
         return results.rows
     },
-    async totalRecipesByChef(id) {
+    async totalRecipesBy(filters) {
         try {
-            const results = await db.query(`
-                SELECT count(recipes) AS total_recipes
-                FROM recipes
-                WHERE recipes.chef_id = ${id}
-            `);
+            let query = `SELECT count(recipes) AS total_recipes FROM recipes`;
+
+            Object.keys(filters).map(key => {
+                query += ` ${key}`;
+          
+                Object.keys(filters[key]).map(field => {
+                  query += ` ${field} = '${filters[key][field]}'`;
+                });
+            });
+
+            const results = await db.query(query);
 
             return results.rows[0].total_recipes;
         } catch (error) {
