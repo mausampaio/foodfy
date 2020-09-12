@@ -126,7 +126,10 @@ module.exports = {
         return res.render("admin/recipes/create", {recipe, chefOptions: options});
     },
     async post(req, res) {
+        const { chef, title, ingredients, preparation, information } = req.body;
         const keys = Object.keys(req.body);
+
+        console.log(ingredients)
     
         for (key of keys) {
             if (req.body[key] == "" && key != "removed_files") {
@@ -137,14 +140,18 @@ module.exports = {
         if (req.files.length == 0) return res.send('Please, send at least one image');
 
         const data = {
-            ...req.body,
+            chef_id: chef,
+            title,
+            ingredients: `{${ingredients}}`,
+            preparation: `{${preparation}}`,
+            information,
             user_id: req.session.userId
         };
 
         const recipeId = await Recipe.create(data);
 
         const filesPromise = req.files.map(async file => {
-            const fileId = await File.create({...file});
+            const fileId = await File.create({name: file.filename, path: file.path});
 
             await Recipe_Files.create({recipe_id: recipeId, file_id: fileId});
 
@@ -211,7 +218,7 @@ module.exports = {
             removedFiles.splice(lastIndex, 1);
 
             const removedFilesPromise = removedFiles.map(id => {
-                Recipe_Files.deleteByFile(id);
+                Recipe_Files.deleteBy({where: {file_id: id}});
 
                 File.delete(id);
 
@@ -222,10 +229,10 @@ module.exports = {
         };
 
         const recipeData = {
-            chef,
+            chef_id: chef,
             title,
-            ingredients,
-            preparation,
+            ingredients: `{${ingredients}}`,
+            preparation: `{${preparation}}`,
             information
         }
 
@@ -234,11 +241,11 @@ module.exports = {
         return res.redirect(`recipes/${id}`);
     },
     async delete(req, res) {
-        const recipe = await Recipe.findOne({where: {id: req.params.id}});
+        const recipe = await Recipe.findOne({where: {id: req.body.id}});
 
         const files = await Recipe.files(recipe.id);
 
-        await Recipe_Files.deleteByRecipe(recipe.id);
+        await Recipe_Files.deleteBy({where: {recipe_id: recipe.id}});
 
         for (file of files) {
             fs.unlinkSync(file.path);

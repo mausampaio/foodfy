@@ -174,13 +174,12 @@ module.exports = {
             avatarData = null;
         };
 
-        results = await Recipe.findByChef(chef.id);
-        const recipes = results.rows;
+        const recipes = await Recipe.findAll({where: {chef_id: chef.id}});
 
         async function getFiles(recipeId) {
             
-            results = await Recipe.files(recipeId);
-            const files = results.rows.map(file => ({
+            let files = await Recipe.files(recipeId);
+            files = files.map(file => ({
                 ...file, 
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }));
@@ -189,6 +188,10 @@ module.exports = {
         }
 
         const recipesPromise = recipes.map(async recipe => {
+            const chef = await Chef.findOne({where: {id: recipe.chef_id}});
+
+            recipe.chef_name = chef.name;
+
             recipe.files = await getFiles(recipe.id);
 
             return recipe;

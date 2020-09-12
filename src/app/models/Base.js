@@ -78,6 +78,19 @@ const Base = {
   },
   delete(id) {
     return db.query(`DELETE FROM ${this.table} WHERE id = $1`, [id]);
+  },
+  deleteBy(filters) {
+    let query = `DELETE FROM ${this.table}`;
+
+    Object.keys(filters).map(key => {
+      query += ` ${key}`;
+
+      Object.keys(filters[key]).map(field => {
+        query += ` ${field} = '${filters[key][field]}'`;
+      });
+    });
+
+    return db.query(query)
   }
 }
 
