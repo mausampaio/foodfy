@@ -7,7 +7,8 @@ CREATE TABLE "chefs" (
   "id" SERIAL PRIMARY KEY,
   "name" text NOT NULL,
   "file_id" int,
-  "created_at" timestamp DEFAULT (now())
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE "files" (
@@ -72,6 +73,12 @@ EXECUTE PROCEDURE trigger_set_timeout();
 -- AUTO UPDATED_AT USERS
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timeout();
+
+-- AUTO UPDATED_AT CHEFS
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON chefs
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timeout();
 

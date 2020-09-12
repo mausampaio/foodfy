@@ -11,16 +11,14 @@ module.exports = {
         let offset = limit * (page -1);
 
         const params = {
-            page,
             limit,
             offset
         };
 
-        let results = await User.paginate(params);
-        const users = results.rows;
+        const users = await User.paginate(params);
 
         async function getTotalRecipes(userId) {
-            results = await User.totalRecipes(userId);
+            const results = await User.totalRecipes(userId);
             const totalRecipes = results.rows[0].total_recipes;
 
             return totalRecipes;

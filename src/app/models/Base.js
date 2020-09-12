@@ -34,6 +34,33 @@ const Base = {
 
     return results.rows;
   },
+  async paginate(params) {
+    const {filters, limit, offset} = params;
+
+    let totalQuery = `(SELECT count(*) FROM ${this.table}`,
+    query = `SELECT ${this.table}.*`,
+    filter = ``;
+
+  
+    if (filters) {
+      Object.keys(filters).map(key => {
+          filter += ` ${key}`;
+    
+          Object.keys(filters[key]).map(field => {
+              filter += ` ${field} ILIKE '%${filters[key][field]}%'`;
+          });
+      });
+    }
+
+    totalQuery += `${filter}) AS total`;
+    query += `, ${totalQuery} FROM ${this.table} ${filter} ORDER BY ${this.table}.updated_at DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    console.log(query)
+
+    const results = await db.query(query);
+  
+    return results.rows;
+  },
   async create(fields) {
     try {
       let keys = [],

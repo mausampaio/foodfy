@@ -40,34 +40,6 @@ module.exports = {
             throw `Database Error! ${err}`;
         };
     },
-    async paginate(params) {
-        try {
-            const {filter, limit, offset} = params;
-
-            let query = "",
-                filterQuery = "",
-                totalQuery = `(SELECT count(*) FROM recipes) AS total`
-
-            if (filter) {
-                filterQuery = `WHERE recipes.title ILIKE '%${filter}%'`;
-
-                totalQuery = `(SELECT count(*) FROM recipes
-                ${filterQuery}) as total`;
-            };
-
-            query = `SELECT recipes.*, ${totalQuery}, chefs.name AS chef_name 
-            FROM recipes
-            LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-            ${filterQuery}
-            ORDER BY recipes.updated_at DESC
-            LIMIT $1 OFFSET $2`;
-
-            const results = await db.query(query, [limit, offset]);
-            return results.rows;
-        }catch(err) {
-            throw `Database Error! ${err}`;
-        };
-    },
     async files(id) {
         const results = await db.query(`SELECT files.*
         FROM files

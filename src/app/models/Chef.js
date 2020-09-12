@@ -29,22 +29,5 @@ module.exports = {
         }catch(err) {
             throw `Database Error! ${err}`;
         };
-    },
-    paginate(params) {
-        try {
-            const {limit, offset} = params;
-            const totalQuery = `(SELECT count(*) FROM chefs) AS total`;
-
-            const query = `SELECT chefs.*, ${totalQuery}, count(recipes) AS total_recipes 
-            FROM chefs
-            LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
-            GROUP BY chefs.id
-            ORDER BY total_recipes DESC
-            LIMIT $1 OFFSET $2`;
-
-            return db.query(query, [limit, offset]);
-        }catch(err) {
-            throw `Database Error! ${err}`;
-        };
     }
 }

@@ -13,13 +13,11 @@ module.exports = {
         let offset = limit * (page -1);
 
         const params = {
-            page,
             limit,
             offset
         };
 
-        let results = await Chef.paginate(params);
-        const chefs = results.rows;
+        const chefs = await Chef.paginate(params);
 
         const pagination = {
             total: Math.ceil(chefs[0].total / limit),
@@ -51,6 +49,8 @@ module.exports = {
             } else {
                 chef.avatar = {src: "http://placehold.it/200x200?text=CHEF SEM FOTO"};
             };
+
+            chef.total_recipes = await Recipe.totalRecipesByChef(chef.id);
             
             return chef;
         })

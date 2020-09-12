@@ -38,11 +38,11 @@ module.exports = {
         let offset = limit * (page -1);
 
         const params = {
-            filter,
-            page,
             limit,
             offset
         };
+
+        if (filter) params.filters = {where: {'recipes.title': filter}};
 
         const recipes = await Recipe.paginate(params);
 
@@ -58,6 +58,10 @@ module.exports = {
         }
 
         const recipesPromise = recipes.map(async recipe => {
+            const chef = await Chef.findOne({where: {id: recipe.chef_id}});
+
+            recipe.chef_name = chef.name;
+
             recipe.files = await getFiles(recipe.id);
 
             return recipe;
@@ -73,6 +77,7 @@ module.exports = {
             pagination.total = Math.ceil(recipes[0].total / limit);
             return res.render('main/recipes/recipes', {recipes: data, pagination, filter});
         } else {
+            const result = 'Nenhum resultado foi encontrado...'
             pagination.total = 0;
             return res.render('main/recipes/recipes', {recipes: data, pagination, filter, result});
         };
@@ -85,13 +90,11 @@ module.exports = {
         let offset = limit * (page -1);
 
         const params = {
-            page,
             limit,
             offset
         };
 
-        let results = await Chef.paginate(params);
-        const chefs = results.rows;
+        const chefs = await Chef.paginate(params);
 
         const pagination = {
             total: Math.ceil(chefs[0].total / limit),
@@ -115,6 +118,8 @@ module.exports = {
             } else {
                 chef.avatar = {src: "http://placehold.it/200x200?text=CHEF SEM FOTO"};
             };
+
+            chef.total_recipes = await Recipe.totalRecipesByChef(chef.id);
             
             return chef;
         })
