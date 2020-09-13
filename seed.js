@@ -53,6 +53,9 @@ async function createRecipes() {
     const recipes = data.recipes;
 
     for (recipe of recipes) {
+        recipe.ingredients = recipe.ingredients.map(ingredient => `"${ingredient}"`);
+        recipe.preparation = recipe.preparation.map(preparationElement => `"${preparationElement}"`);
+
         const params = {
             title: recipe.title,
             ingredients: `{${recipe.ingredients}}`,

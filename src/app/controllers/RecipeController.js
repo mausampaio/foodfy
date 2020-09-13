@@ -132,7 +132,7 @@ module.exports = {
         return res.render("admin/recipes/create", {recipe, chefOptions: options});
     },
     async post(req, res) {
-        const { chef, title, ingredients, preparation, information } = req.body;
+        let { chef, title, ingredients, preparation, information } = req.body;
         const keys = Object.keys(req.body);
 
         console.log(ingredients)
@@ -144,6 +144,9 @@ module.exports = {
         };
 
         if (req.files.length == 0) return res.send('Please, send at least one image');
+
+        ingredients = ingredients.map(ingredient => `"${ingredient}"`);
+        preparation = preparation.map(preparationElement => `"${preparationElement}"`);
 
         const data = {
             chef_id: chef,
@@ -188,7 +191,7 @@ module.exports = {
         return res.render("admin/recipes/edit", {recipe, chefOptions: options, files});
     },
     async put(req, res) {
-        const { chef, title, ingredients, preparation, information, id, removed_files } = req.body;
+        let { chef, title, ingredients, preparation, information, id, removed_files } = req.body;
         const keys = Object.keys(req.body);
     
         for (key of keys) {
@@ -233,6 +236,9 @@ module.exports = {
 
             await Promise.all(removedFilesPromise);
         };
+
+        ingredients = ingredients.map(ingredient => `"${ingredient}"`);
+        preparation = preparation.map(preparationElement => `"${preparationElement}"`);
 
         const recipeData = {
             chef_id: chef,
