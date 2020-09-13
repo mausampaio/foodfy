@@ -103,10 +103,10 @@ Esse projeto foi desenvolvido durante a o bootcamp Launchbase, ministrado pela [
 ```bash
     
     # Instalar as dependências
-    $ node install
+    $ npm install
 
     # Iniciar o projeto
-    $ node start
+    $ npm start
 
 ```
 

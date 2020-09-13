@@ -19,16 +19,15 @@ async function createChefs() {
             path: chef.file.path
         }
 
-        let results = await File.create({...file});
-        const fileId = results.rows[0].id;
+        const fileId = await File.create({...file});
 
         const params = {
             name: chef.name,
             file_id: fileId
         };
 
-        results = await Chef.create(params);
-        chefsIds.push(results.rows[0].id);
+        const chefId = await Chef.create(params);
+        chefsIds.push(chefId);
     };
 };
 
@@ -45,7 +44,7 @@ async function createUsers() {
             is_admin: user.is_admin
         };
 
-        const userId = await User.Create(params);
+        const userId = await User.create(params);
         usersIds.push(userId);
     };
 };
@@ -56,23 +55,21 @@ async function createRecipes() {
     for (recipe of recipes) {
         const params = {
             title: recipe.title,
-            ingredients: recipe.ingredients,
-            preparation: recipe.preparation,
+            ingredients: `{${recipe.ingredients}}`,
+            preparation: `{${recipe.preparation}}`,
             information: recipe.information,
-            chef: chefsIds[Math.floor(Math.random() * chefsIds.length)],
+            chef_id: chefsIds[Math.floor(Math.random() * chefsIds.length)],
             user_id: usersIds[Math.floor(Math.random() * usersIds.length)]
         };
 
-        let results = await Recipe.create(params);
-        const recipeId = results.rows[0].id;
+        const recipeId = await Recipe.create(params);
 
         const imagesPromise = recipe.images.map(async image => {
             const imageData = {
                 name: image.name,
                 path: image.path
             }
-            results = await File.create({...imageData});
-            const fileId = results.rows[0].id; 
+            const fileId = await File.create({...imageData});
 
             await Recipe_Files.create({recipe_id: recipeId, file_id: fileId});
 
