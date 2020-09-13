@@ -74,7 +74,7 @@ Esse projeto foi desenvolvido durante a o bootcamp Launchbase, ministrado pela [
 #### Database
 
 - É necessário criar a sua base de dados juntamente com todas as tabelas necessárias, para facilitar criei um arquivo na raiz do projeto com nome de database.pgsql que contem todas as informações necessárias para se criar o banco necessário.
-- Após a criação do database é preciso executar o seed.js para popular o banco seguindo as instrunções abaixo.
+- Após a criação do database é preciso executar o seed.js para popular o banco seguindo as instruções abaixo.
 
 ```bash
   

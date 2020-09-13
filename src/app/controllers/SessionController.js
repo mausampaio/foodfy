@@ -45,15 +45,45 @@ module.exports = {
                 from: 'no-reply@launchstore.com.br',
                 subject: 'Recuperção de senha',
                 html: `
-                    <h2>Esqueceu sua senha?</h2>
-                    <p>Não se preocupe, clique no link abaixo para recuperar sua senha.</p>
-                    <p>
-                        <a href="http://localhost:3000/admin/users/password-reset?token=${token}" target="_blank">
-                            RECUPERAR SENHA
-                        </a>
-                    </p>
+                    <table style="border-spacing: 0px; width: 586px; background-color: #ffffff; border: 1px solid #999999; height: 508px; margin: 0px auto; padding: 0px; font-size: 10pt;">
+                        <tbody>
+                            <tr style="height: 14px; border-color: #999; background-color: #a9a9a9;">
+                                <td style="width: 60px; text-align: center;" colspan="3">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 60px;">&nbsp;</td>
+                                <td style="width: 500px; text-align: left; vertical-align: middle;">
+                                <p>&nbsp;</p>
+                                <p style="text-align: left; margin-top: 30px; margin-bottom: 30px;"><img src="https://raw.githubusercontent.com/mausampaio/foodfy/master/.github/logo.png"  /></p>
+                                <p style="margin-top: 0px;"><strong>Esqueceu sua senha?</strong></p>
+                                <p>Não se preocupe, clique no link abaixo para recuperar sua senha.</p>
+                        
+                                <p>
+                                    <a href="http://localhost:3000/admin/users/password-reset?token=${token}" target="_blank">
+                                    RECUPERAR SENHA
+                                    </a>
+                                </p>
+                                </td>
+                                <td style="width: 53px; text-align: center;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="text-decoration: none; font-size: 9pt; border-top: 1px solid #cccccc; color: #999999; padding: 10px 0 10px 0;" colspan="3">
+                                <p style="padding-left: 30px; margin: 0 0 2px 0;"><span style="color: #999999;"><span style="font-size: 12px;">Foodfy - O seu portal de receitas</span></span></p>
+                                <p style="padding-left: 30px; margin: 0 0 2px 0;">https://tiziiu.com.br</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 `
             });
+
+            // <h2>Esqueceu sua senha?</h2>
+            //         <p>Não se preocupe, clique no link abaixo para recuperar sua senha.</p>
+            //         <p>
+            //             <a href="http://localhost:3000/admin/users/password-reset?token=${token}" target="_blank">
+            //                 RECUPERAR SENHA
+            //             </a>
+            //         </p>
 
             return res.render("admin/session/forgot-password", {
                 success: "Um link de recuperação foi enviado para o e-mail cadastrado."

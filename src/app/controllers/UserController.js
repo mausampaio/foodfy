@@ -70,18 +70,64 @@ module.exports = {
             from: 'no-reply@foodfy.com.br',
             subject: 'Bem-vindo ao Foodfy!',
             html: `
-                <h2>Parabéns! O seu cadastro no Foodfy foi realizado com sucesso!</h2>
-                <p>Para realizar o acesso ao sistema basta utilizar os dados abaixo:</p>
-                <ul>
-                    <li>
-                        Usuário: ${data.email}
-                    </li>
-                    <li>
-                        Senha: ${randomstring}
-                    </li>
-                </ul>
+                <table style="border-spacing: 0px; width: 586px; background-color: #ffffff; border: 1px solid #999999; height: 508px; margin: 0px auto; padding: 0px; font-size: 10pt;">
+                    <tbody>
+                        <tr style="height: 14px; border-color: #999; background-color: #a9a9a9;">
+                            <td style="width: 60px; text-align: center;" colspan="3">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 60px;">&nbsp;</td>
+                            <td style="width: 20px; text-align: left; vertical-align: middle;">
+                            <p>&nbsp;</p>
+                            <p style="text-align: left; margin-top: 30px; margin-bottom: 30px;"><img src="https://raw.githubusercontent.com/mausampaio/foodfy/master/.github/logo.png"  /></p>
+                            <p style="margin-top: 0px;"><strong>Parabéns, ${data.name}!</strong></p>
+                            <p>O seu cadastro no Foodfy foi realizado com sucesso.</p>
+                    
+                            <p>Para realizar o acesso ao sistema basta utilizar os dados abaixo:</p>
+                            <table style="height: 40px; margin-top: 30px;" width="511" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                <tr>
+                                    <td style="padding: 10px 0 10px 100px;">
+                                    <p><strong>USUÁRIO</strong></p>
+                                    </td>
+                                    <td>
+                                    <p>${data.email}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0 10px 100px; border-top: 1px solid #cccccc;">
+                                    <p><strong>SENHA</strong></p>
+                                    </td>
+                                    <td style="border-top: 1px solid #cccccc;">
+                                    <p>${randomstring}</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                            <td style="width: 53px; text-align: center;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="text-decoration: none; font-size: 9pt; border-top: 1px solid #cccccc; color: #999999; padding: 10px 0 10px 0;" colspan="3">
+                            <p style="padding-left: 30px; margin: 0 0 2px 0;"><span style="color: #999999;"><span style="font-size: 12px;">Foodfy - O seu portal de receitas</span></span></p>
+                            <p style="padding-left: 30px; margin: 0 0 2px 0;">https://tiziiu.com.br</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             `
         });
+
+        // <h2>Parabéns! O seu cadastro no Foodfy foi realizado com sucesso!</h2>
+        //         <p>Para realizar o acesso ao sistema basta utilizar os dados abaixo:</p>
+        //         <ul>
+        //             <li>
+        //                 Usuário: ${data.email}
+        //             </li>
+        //             <li>
+        //                 Senha: ${randomstring}
+        //             </li>
+        //         </ul>
 
         return res.redirect('/admin/users');
     },
