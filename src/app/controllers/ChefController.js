@@ -189,7 +189,7 @@ module.exports = {
         await Promise.all(filesPromise);
 
         const data = {
-            ...req.body,
+            name: req.body.name,
             file_id: fileId
         }
 
