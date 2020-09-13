@@ -74,8 +74,7 @@ Esse projeto foi desenvolvido durante a o bootcamp Launchbase, ministrado pela [
 #### Database
 
 - É necessário criar a sua base de dados juntamente com todas as tabelas necessárias, para facilitar criei um arquivo na raiz do projeto com nome de database.pgsql que contem todas as informações necessárias para se criar o banco necessário.
-- Após a criação do database é preciso executar o seed.js para popular o banco seguindo as intrunções abaixo
-- Para que o Foodfy tenha acesso ao seu database será necessário alterar o arquivo db.js em src/config com as suasinformações de acesso.
+- Após a criação do database é preciso executar o seed.js para popular o banco seguindo as instrunções abaixo.
 
 ```bash
   
@@ -83,12 +82,16 @@ Esse projeto foi desenvolvido durante a o bootcamp Launchbase, ministrado pela [
     $ node seed.js
 
 ```
+- Para que o Foodfy tenha acesso ao seu database será necessário alterar o arquivo db.js em src/config com as suas informações de acesso.
 - O seed.js popula o banco com informações que estão no arquivo data.json e utiliza as imagens que se encontram na pasta public/images. Caso você exclua as receitas ou chefs as imagens também serão apagadas, para executar novamente o seed.js copie as imagens de public/assets/seed_images para public/images.
 - São criados dois usuários no processo de população, o admin e o operator com os seguites dados de acesso:
 
 > E-mail: admin@foodfy.com
+> <br/>
 > Senha: admin
+> <br/>
 > E-mail: operator@foodfy.com
+> <br/>
 > Senha: operator
 
 #### Web
