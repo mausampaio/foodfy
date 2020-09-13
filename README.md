@@ -94,6 +94,10 @@ Esse projeto foi desenvolvido durante a o bootcamp Launchbase, ministrado pela [
 > <br/>
 > Senha: operator
 
+#### Mailer
+
+- Para o envio de e-mails funcionar será necessário modificar o arquivo mailer.js em src/lib com as suas informações de envio.
+
 #### Web
 
 ```bash

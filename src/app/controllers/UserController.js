@@ -19,8 +19,7 @@ module.exports = {
         const users = await User.paginate(params);
 
         async function getTotalRecipes(userId) {
-            const results = await User.totalRecipes(userId);
-            const totalRecipes = results.rows[0].total_recipes;
+            const totalRecipes = await Recipe.totalRecipesBy({where: {user_id: userId}});
 
             return totalRecipes;
         };
@@ -156,8 +155,7 @@ module.exports = {
 
             await User.update(id, data);
 
-            const results = await User.totalRecipes(id);
-            const totalRecipes = results.rows[0].total_recipes;
+            const totalRecipes = await Recipe.totalRecipesBy({where: {user_id: id}});
 
             return res.render("admin/user/edit", {
                 user: {
