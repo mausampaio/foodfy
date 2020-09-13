@@ -66,8 +66,6 @@ const Base = {
     totalQuery += `${search} ${filter}) AS total`;
     query += `, ${totalQuery} FROM ${this.table} ${search} ${filter} ORDER BY ${this.table}.updated_at DESC LIMIT ${limit} OFFSET ${offset}`;
 
-    console.log(query)
-
     const results = await db.query(query);
   
     return results.rows;
